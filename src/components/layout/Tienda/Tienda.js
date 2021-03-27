@@ -220,9 +220,6 @@ const Tienda = () => {
 									onClick={() => {
 										activeBtnAct(true);
 										guardarCambiosEnLista(listaseleccionada);
-										// setTimeout(() => {
-										// 	obtenerListas();
-										// }, 1000);
 										setTimeout(() => {
 											activeBtnAct(false);
 										}, 2000);

@@ -9,6 +9,7 @@ import NuevaCuenta from "./components/layout/auth/NuevaCuenta";
 import Tienda from "./components/layout/Tienda/Tienda";
 import ListaState from "./context/listas/listaState";
 import ElementState from "./context/elementos/elementState";
+import Admin from "./components/layout/admin/Admin";
 
 // revisar si existe token
 const token = localStorage.getItem("token");
@@ -28,6 +29,7 @@ function App() {
 									<Route exact path="/" component={Login} />
 									<Route exact path="/registro" component={NuevaCuenta} />
 									<Route exact path="/tienda" component={Tienda} />
+									<Route exact path="/admin" component={Admin} />
 								</Switch>
 							</Router>
 						</AuthState>

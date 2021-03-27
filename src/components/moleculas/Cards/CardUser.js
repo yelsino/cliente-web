@@ -38,7 +38,7 @@ const CardUser = ({ usuario, cerrarSesion, abrirCard, cerrCard }) => {
 					>
 						Crear Lista
 					</button>
-					<OpcionItem texto={"Mi cuenta"} url={"/user/cuenta"} />
+					<OpcionItem texto={"Mi cuenta"} url={"/admin"} />
 					<div
 						className=" border-b border-blue-600 text-red-500"
 						onClick={Logout}

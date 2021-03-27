@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/autenticacion/authContext";
 import Logo from "../../atomos/Logo";
-import TextoRojo from "../../atomos/textos/Rojo";
 import InputRdVerde from "../../atomos/inputs/InputRdVerde";
+import TextoRojo from "../../atomos/textos/TextoRojo";
 
 const Login = (props) => {
 	// extraer valores del context

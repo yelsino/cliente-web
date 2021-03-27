@@ -8,7 +8,7 @@ const InputRdVerde = ({ atributos, handleChange }) => {
 		<div className="relative my-4">
 			<input
 				onChange={handleChange}
-				className=" border border-green-500 text-green-500 rounded-lg  font-semibold outline-none py-4 px-6 text-lg input_text fill-current"
+				className=" border-4 border-green-500 text-green-500 rounded-lg  font-semibold outline-none py-4 px-6 text-lg input_text fill-current"
 				id={atributos.id}
 				value={atributos.value}
 				name={atributos.name}
