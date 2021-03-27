@@ -1,38 +1,102 @@
-.App {
-  text-align: center;
+.alerta {
+	position: fixed;
+	top: 2rem;
+	left: 0;
+	padding: 3px;
+	border-radius: 1rem;
+	font-family: var(--headingFont);
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 1.2rem;
+	text-align: center;
+	width: 100%;
+}
+@media (min-width: 768px) {
+	.alerta {
+		width: auto;
+		top: 30px;
+		right: 10px;
+		left: auto;
+	}
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.alerta-ok {
+	background-color: rgb(109, 211, 109);
+	color: rgb(2, 103, 2);
+}
+.alerta-error {
+	background-color: rgb(230, 78, 78);
+	color: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+input:-internal-autofill-selected {
+	appearance: menulist-button;
+	background-color: none !important ;
+	background-image: none !important;
+	color: -internal-light-dark(black, white) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.label_texto {
+	padding: 0px 4px;
+}
+.input_text {
+	transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
 }
 
-.App-link {
-  color: #61dafb;
+.input_text:focus ~ .label_texto {
+	top: -1rem;
+	font-size: 0.8rem;
+	left: 0.8rem;
+	background: #ffffff;
+	display: block;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* input:-internal-autofill-selected {
+	appearance: menulist-button;
+	background-color: red !important;
+	background-image: none !important;
+	color: -internal-light-dark(white) !important;
+} */
+
+input,
+span,
+label,
+img,
+p,
+button,
+h3,
+.no-seleccionable {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	-webkit-text-fill-color: #10b981;
+	/* -webkit-box-shadow: 0 0 0px 1000px #000 inset; */
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+.rotate-scale-up {
+	animation: rotate-scale-up 0.65s linear both;
+}
+@keyframes rotate-scale-up {
+	0% {
+		transform: scale(1) rotateZ(0);
+	}
+	50% {
+		transform: scale(2) rotateZ(180deg);
+	}
+	100% {
+		transform: scale(1) rotateZ(360deg);
+	}
 }

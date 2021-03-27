@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import AuthState from "./context/autenticacion/authState";
+import AlertaState from "./context/alertas/alertaState";
+import ProductoState from "./context/productos/productoState";
+import tokenAuth from "./config/token";
+import Login from "./components/layout/auth/Login";
+import NuevaCuenta from "./components/layout/auth/NuevaCuenta";
+import Tienda from "./components/layout/Tienda/Tienda";
+import ListaState from "./context/listas/listaState";
+import ElementState from "./context/elementos/elementState";
+
+// revisar si existe token
+const token = localStorage.getItem("token");
+if (token) {
+	tokenAuth(token);
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<ElementState>
+			<AlertaState>
+				<ListaState>
+					<ProductoState>
+						<AuthState>
+							<Router>
+								<Switch>
+									<Route exact path="/" component={Login} />
+									<Route exact path="/registro" component={NuevaCuenta} />
+									<Route exact path="/tienda" component={Tienda} />
+								</Switch>
+							</Router>
+						</AuthState>
+					</ProductoState>
+				</ListaState>
+			</AlertaState>
+		</ElementState>
+	);
 }
 
 export default App;
