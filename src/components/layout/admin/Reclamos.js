@@ -2,7 +2,7 @@ import BotonRojo from "../../atomos/botones/BotonRojo";
 import SubTitulo from "../../atomos/textos/SubTitulo";
 import ItemReclamo from "../../moleculas/Items/ItemReclamo";
 
-const Cancelados = () => {
+const Reclamos = () => {
 	return (
 		<div className="mx-20 my-16  w-full">
 			<div className="mt-10">
@@ -35,4 +35,4 @@ const Cancelados = () => {
 	);
 };
 
-export default Cancelados;
+export default Reclamos;
