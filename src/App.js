@@ -29,7 +29,7 @@ function App() {
 									<Route exact path="/" component={Login} />
 									<Route exact path="/registro" component={NuevaCuenta} />
 									<Route exact path="/tienda" component={Tienda} />
-									<Route exact path="/admin" component={Admin} />
+									<Route path="/admin" component={Admin} />
 								</Switch>
 							</Router>
 						</AuthState>
