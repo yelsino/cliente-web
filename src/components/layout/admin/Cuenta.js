@@ -9,6 +9,10 @@ import TextoRojo from "../../atomos/textos/TextoRojo";
 import CardModal from "../../moleculas/Cards/CardModal";
 
 const Cuenta = () => {
+	const authContext = useContext(AuthContext);
+	const { usuario, token, cerrarSesion } = authContext;
+	const listasContext = useContext(ListaContext);
+
 	const [active, setActive] = useState(false);
 
 	const openModal = () => {
@@ -20,8 +24,8 @@ const Cuenta = () => {
 	};
 
 	return (
-		<div className="mx-20 my-16  w-full">
-			<div className="mt-10">
+		<div className="  w-full">
+			<div className="">
 				<SubTitulo texto={"Mi Cuenta"} />
 			</div>
 

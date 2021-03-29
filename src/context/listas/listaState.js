@@ -15,9 +15,11 @@ import ListaContext from "./listaContext";
 import listaReducer from "./listaReducer";
 
 const ListaState = (props) => {
+	const json_lista_actual = localStorage.getItem("lista_actual");
+	const lista_actual = JSON.parse(json_lista_actual);
 	const initialState = {
 		listas: [],
-		listaseleccionada: null,
+		listaseleccionada: !lista_actual ? null : lista_actual,
 	};
 
 	// d dispatch para ejecturar las acciones
@@ -64,6 +66,15 @@ const ListaState = (props) => {
 		}
 	};
 
+	// d eliminar lista
+	const eliminarLista = async (listaId) => {
+		try {
+			const resultado = await clienteAxios.delete(`api/listas/${listaId}`);
+			console.log(resultado);
+		} catch (error) {
+			console.log(error.response);
+		}
+	};
 	//  d seleccionar lista actual
 	const listaActual = async (listaId) => {
 		dispatch({
@@ -180,6 +191,7 @@ const ListaState = (props) => {
 				quitarProductoEnLista,
 				actualizarCantidadProductoLista,
 				guardarCambiosEnLista,
+				eliminarLista,
 			}}
 		>
 			{props.children}

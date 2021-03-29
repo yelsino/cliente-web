@@ -94,7 +94,7 @@ const Navbar = (props) => {
 					{token ? (
 						<IconUser open={openCardUser} />
 					) : (
-						<Link to={"/login"}>Iniciar</Link>
+						<Link to={"/"}>Iniciar</Link>
 					)}
 					{opencarduser && (
 						<div className="absolute mt-12">

@@ -9,6 +9,7 @@ const CardAgregar = ({ producto }) => {
 
 	const listasContext = useContext(ListaContext);
 	const {
+		listas,
 		listaseleccionada,
 		agregarProductoEnLista,
 		guardarCambiosEnLista,
@@ -30,6 +31,11 @@ const CardAgregar = ({ producto }) => {
 	const [btn, showBtn] = useState(false);
 
 	const agregarProducto = () => {
+		console.log(listas.length);
+		if (listas.length === 0) {
+			mostrarAlerta("crea una lista de pedido para iniciar");
+			return;
+		}
 		if (!listaseleccionada) {
 			mostrarAlerta("elija o crea una lista");
 			return;

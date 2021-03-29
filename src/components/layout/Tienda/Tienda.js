@@ -19,7 +19,7 @@ const Tienda = () => {
 	const authContext = useContext(AuthContexto);
 	const { usuario, usuarioAutenticado } = authContext;
 	const alertasContext = useContext(alertaContext);
-	const { alerta, mostrarAlerta } = alertasContext;
+	const { alerta, card, abrirCard, mostrarAlerta } = alertasContext;
 	const elementosContext = useContext(ElementoContext);
 	const { elemento_actual, mostrarElemento } = elementosContext;
 	const productoContext = useContext(ProductoContext);
@@ -161,8 +161,13 @@ const Tienda = () => {
 							</div>
 						) : (
 							<BotonAzul
+								onBtn={() => {
+									abrirCard();
+								}}
 								texto={"Crear Lista"}
-								style={" shadow-xl z-0 bg-red-100 text-xl py-4"}
+								style={
+									" fixed bottom-12 right-12 shadow-xl z-0 bg-red-100 text-xl py-4"
+								}
 							/>
 						)}
 						{pagar && <Superposicion />}
@@ -171,7 +176,7 @@ const Tienda = () => {
 						<InputRdVerde
 							atributos={{
 								name: "buscar",
-								placeholder: "Buscar",
+								placeholder: "Buscar Productos",
 								id: "buscar",
 								type: "text",
 								value: buscar,
@@ -224,7 +229,7 @@ const Tienda = () => {
 											activeBtnAct(false);
 										}, 2000);
 									}}
-									className={` px-2 py-2 border-primario-green-semi border-4 rounded-lg text-center w-32 text-primario-green-semi font-bold no-underline outline-none focus:outline-none  ${
+									className={` px-2 py-2 border-primario-green-semi border-4 rounded-lg text-center w-36 text-primario-green-semi font-bold no-underline outline-none focus:outline-none  ${
 										btn_act ? "bg-primario-green border-none" : ""
 									}`}
 								>
@@ -253,10 +258,21 @@ const Tienda = () => {
 						<SubTitulo texto={"Lista de Pedido"} style={"text-center"} />
 					)}
 					{listas.length < 1 ? (
-						<p className="text-primario-blue text-center marginporciento20 text-lg">
+						<p
+							className={` text-center marginporciento20 text-lg ${
+								alerta ? "text-primario-red" : "text-primario-blue"
+							}`}
+						>
 							Crea una{" "}
 							<span className="text-primario-red cursor-pointer">
-								nueva lista
+								<span
+									// onClick={() => {
+									// 	abrirCard();
+									// }}
+									className={`${alerta ? "text-primario-blue" : ""}`}
+								>
+									nueva lista
+								</span>
 							</span>{" "}
 							<br /> y añada productos
 						</p>

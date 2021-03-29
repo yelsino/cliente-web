@@ -26,6 +26,7 @@ export default (state, action) => {
 			const lista_actual = state.listas.filter(
 				(lista) => lista._id === action.payload
 			);
+			localStorage.setItem("lista_actual", JSON.stringify(lista_actual[0]));
 			return {
 				...state,
 				listaseleccionada: lista_actual[0],
