@@ -9,6 +9,7 @@ import {
 	ADD_PRODUCTO_LISTA,
 	ATUALIZAR_CANTIDAD_PRODUCTO,
 	ACTUALIZAR_LISTAS,
+	ELIMINAR_LISTA,
 } from "../../types";
 
 import ListaContext from "./listaContext";
@@ -70,7 +71,13 @@ const ListaState = (props) => {
 	const eliminarLista = async (listaId) => {
 		try {
 			const resultado = await clienteAxios.delete(`api/listas/${listaId}`);
-			console.log(resultado);
+			if (resultado.status === 204) {
+				const copy_listas = state.listas.filter((e) => e._id !== listaId);
+				dispatch({
+					type: ELIMINAR_LISTA,
+					payload: copy_listas,
+				});
+			}
 		} catch (error) {
 			console.log(error.response);
 		}

@@ -8,6 +8,7 @@ import {
 	REGISTRO_EXITOSO,
 	REGISTRO_ERROR,
 	CERRAR_SESION,
+	ACTUALZIAR_CUENTA,
 } from "../../types";
 import AuthContext from "./authContext";
 import AuthReducer from "../../context/autenticacion/authReducer";
@@ -52,7 +53,6 @@ const AuthState = (props) => {
 
 		try {
 			const respuesta = await clienteAxios.get("api/auth");
-
 			dispatch({
 				type: OBTENER_USUARIO,
 				payload: respuesta.data,
@@ -97,6 +97,38 @@ const AuthState = (props) => {
 		});
 	};
 
+	// d actualziar cuenta de usuario
+	const actualizarCuentaDeUsuario = async (usuarioId, datos) => {
+		try {
+			const resultado = await clienteAxios.put(`api/users/${usuarioId}`, datos);
+			dispatch({
+				type: ACTUALZIAR_CUENTA,
+				payload: resultado.data,
+			});
+		} catch (error) {
+			console.log(error.response);
+		}
+	};
+
+	const eliminarCuentadeUsuario = async (usuarioId) => {
+		try {
+			const resultado = await clienteAxios.delete(`api/users/${usuarioId}`);
+			console.log(resultado);
+			if (resultado.status === 200) {
+				localStorage.removeItem("usuario");
+				localStorage.removeItem("direccion_actual");
+				localStorage.removeItem("lista_actual");
+				localStorage.removeItem("token");
+				window.location.replace("http://localhost:3000/");
+				console.log("cuenta eliminada");
+			} else {
+				return;
+			}
+		} catch (error) {
+			console.log(error.response);
+		}
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -108,6 +140,8 @@ const AuthState = (props) => {
 				iniciarSesion,
 				usuarioAutenticado,
 				cerrarSesion,
+				actualizarCuentaDeUsuario,
+				eliminarCuentadeUsuario,
 			}}
 		>
 			{" "}

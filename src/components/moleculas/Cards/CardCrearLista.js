@@ -5,7 +5,7 @@ import BotonAzul from "../../atomos/botones/BotonAzul";
 import InputRdAzul from "../../atomos/inputs/InputRdAzul";
 import alertaContext from "../../../context/alertas/alertaContext";
 
-const CardCrearLista = ({ cerrar }) => {
+const CardCrearLista = ({ cerrar, cerrar2 }) => {
 	const authContext = useContext(AuthContext);
 	const { usuario } = authContext;
 	const listaContext = useContext(ListaContext);
@@ -26,6 +26,7 @@ const CardCrearLista = ({ cerrar }) => {
 		};
 		crearLista(lista);
 		cerrar();
+		cerrar2();
 	};
 	const onChange = (e) => {
 		setNombre(e.target.value);

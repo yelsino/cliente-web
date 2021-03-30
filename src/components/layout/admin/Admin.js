@@ -7,13 +7,22 @@ import Reclamos from "./Reclamos";
 import Cuenta from "./Cuenta";
 import ListaContext from "../../../context/listas/listaContext";
 import Lista from "../../organismos/lista";
+import AuthContext from "../../../context/autenticacion/authContext";
+import DireccionContext from "../../../context/direcciones/direccionContext";
 
 const Admin = () => {
 	const listasContext = useContext(ListaContext);
 	const { listas, obtenerListas } = listasContext;
+	const authContext = useContext(AuthContext);
+	const { usuarioAutenticado } = authContext;
+	const direccionesContext = useContext(DireccionContext);
+	const {direcciones, obtenerDirecciones} = direccionesContext
+
 	useEffect(() => {
 		obtenerListas();
-	});
+		usuarioAutenticado();
+		obtenerDirecciones()
+	}, []);
 	return (
 		<Fragment>
 			<Router>

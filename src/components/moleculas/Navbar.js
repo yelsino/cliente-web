@@ -7,6 +7,7 @@ import CardUser from "./Cards/CardUser";
 import AuthContext from "../../context/autenticacion/authContext";
 import CardCrearLista from "./Cards/CardCrearLista";
 import ListaContext from "../../context/listas/listaContext";
+import ElementoContext from "../../context/elementos/elementContext";
 
 const Navbar = (props) => {
 	const [opencarduser, setOpenCardUser] = useState(false);
@@ -21,6 +22,9 @@ const Navbar = (props) => {
 		guardarCambiosEnLista,
 		obtenerListas,
 	} = listasContext;
+
+	const elementosContext = useContext(ElementoContext);
+	const { elemento, crearElemento } = elementosContext;
 
 	const openCardUser = (e) => {
 		e.preventDefault();
@@ -60,12 +64,14 @@ const Navbar = (props) => {
 				>
 					Inicio
 				</Link>
-				<Link
-					to={"/"}
-					className="px-5 py-1 focus-within:text-green-600 relative"
-				>
-					Tienda
-				</Link>
+				{!usuario && (
+					<Link
+						to={"/"}
+						className="px-5 py-1 focus-within:text-green-600 relative"
+					>
+						Tienda
+					</Link>
+				)}
 
 				<div className=" px-5 py-1 relative  flex justify-center bg-white">
 					<div onClick={openCardList} className="cursor-pointer">
@@ -85,7 +91,15 @@ const Navbar = (props) => {
 
 					{opennewlist && (
 						<div className="absolute mt-12">
-							<CardCrearLista cerrar={setOpenNewCardList} />
+							<CardCrearLista cerrar2={() => {}} cerrar={setOpenNewCardList} />
+						</div>
+					)}
+					{elementosContext.elemento && (
+						<div className="absolute mt-12">
+							<CardCrearLista
+								cerrar2={crearElemento}
+								cerrar={setOpenNewCardList}
+							/>
 						</div>
 					)}
 				</div>

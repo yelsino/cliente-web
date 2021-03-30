@@ -1,9 +1,9 @@
-import { HiDotsVertical } from 'react-icons/hi'
+import { HiDotsVertical } from "react-icons/hi";
 
-const IconOpciones = () => {
-    return ( 
-        <HiDotsVertical className='text-gray-600 text-2xl' />
-     );
-}
- 
+const IconOpciones = (props) => {
+	return (
+		<HiDotsVertical onClick={props.onIcon} className="text-gray-600 text-2xl" />
+	);
+};
+
 export default IconOpciones;

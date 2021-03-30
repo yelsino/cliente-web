@@ -49,11 +49,13 @@ export default (state, action) => {
 					cantidad_producto: action.payload,
 				},
 			};
+		case ELIMINAR_LISTA:
 		case ACTUALIZAR_LISTAS:
 			return {
 				...state,
 				listas: action.payload,
 			};
+
 		default:
 			return state;
 	}

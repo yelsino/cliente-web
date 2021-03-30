@@ -1,9 +1,7 @@
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus } from "react-icons/fa";
 
-const IconMas = () => {
-    return ( 
-        <FaPlus/>
-     );
-}
- 
+const IconMas = (props) => {
+	return <FaPlus className={`${props.stylos ? props.stylos : ""}`} />;
+};
+
 export default IconMas;

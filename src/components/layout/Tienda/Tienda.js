@@ -13,6 +13,7 @@ import Navbar from "../../moleculas/Navbar";
 import Superposicion from "../../moleculas/Superposicion";
 import round from "round";
 import InputRdVerde from "../../atomos/inputs/InputRdVerde";
+import { useHistory } from "react-router";
 
 const Tienda = () => {
 	//d CONTEXTOS
@@ -21,7 +22,12 @@ const Tienda = () => {
 	const alertasContext = useContext(alertaContext);
 	const { alerta, card, abrirCard, mostrarAlerta } = alertasContext;
 	const elementosContext = useContext(ElementoContext);
-	const { elemento_actual, mostrarElemento } = elementosContext;
+	const {
+		elemento_actual,
+		elemento,
+		mostrarElemento,
+		crearElemento,
+	} = elementosContext;
 	const productoContext = useContext(ProductoContext);
 	const { productos, obtenerProductos, obtenerporCategoria } = productoContext;
 
@@ -34,28 +40,26 @@ const Tienda = () => {
 		guardarCambiosEnLista,
 	} = listaContext;
 
+	const history = useHistory();
 	// d ESTADOS
-	const [pagar, setPagar] = useState(false);
+	// const [pagar, setPagar] = useState(false);
 	const [btn_act, activeBtnAct] = useState(false);
 	const [buscar, setBuscador] = useState("");
 	const [filtrado, setFiltrado] = useState([]);
-	const [total_lista, setTotalLista] = useState(
-		listaseleccionada
-			? listaseleccionada.cantidad_producto.reduce(
-					(acc, { cantidad_producto, id }) =>
-						acc +
-						cantidad_producto *
-							listaseleccionada.productos.find((e) => e._id === id)
-								.precio_minoreo,
-					0
-			  )
-			: 0
-	);
+	// const [total_lista, setTotalLista] = useState(
+	// 	listaseleccionada
+	// 		? listaseleccionada.cantidad_producto.reduce(
+	// 				(acc, { cantidad_producto, id }) =>
+	// 					acc +
+	// 					cantidad_producto *
+	// 						listaseleccionada.productos.find((e) => e._id === id)
+	// 							.precio_minoreo,
+	// 				0
+	// 		  )
+	// 		: 0
+	// );
 
 	// d FUNCIONES
-	const showPay = () => {
-		setPagar(!pagar);
-	};
 
 	const getVegetales = () => obtenerporCategoria("601ecaad34bf2f55c7fbfd82");
 
@@ -83,7 +87,6 @@ const Tienda = () => {
 		obtenerProductos();
 		usuarioAutenticado();
 		obtenerListas();
-		console.log("efect tienda");
 	}, []);
 
 	return (
@@ -151,7 +154,7 @@ const Tienda = () => {
 								<BotonAzul
 									onBtn={() => {
 										guardarCambiosEnLista(listaseleccionada);
-										showPay();
+										history.push("/pedido");
 									}}
 									texto={"Pedir Envio"}
 									style={
@@ -162,7 +165,7 @@ const Tienda = () => {
 						) : (
 							<BotonAzul
 								onBtn={() => {
-									abrirCard();
+									crearElemento();
 								}}
 								texto={"Crear Lista"}
 								style={
@@ -170,7 +173,7 @@ const Tienda = () => {
 								}
 							/>
 						)}
-						{pagar && <Superposicion />}
+						{/* {pagar && <Superposicion />} */}
 					</div>
 					<div className="fixed bottom-0 w-full  medida50 flex justify-center bg-white mt-20">
 						<InputRdVerde

@@ -20,9 +20,8 @@ const Login = (props) => {
 			props.history.push("/tienda");
 		}
 		if (mensaje) {
-			mostrarAlerta("iniciando", "dasdas");
+			mostrarAlerta("error al iniciar");
 		}
-		console.log("efect login");
 	}, [mensaje, autenticado, props.history]);
 
 	const [usuario, guardarUsuario] = useState({

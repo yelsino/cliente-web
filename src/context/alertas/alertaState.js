@@ -24,7 +24,7 @@ const AlertaState = (props) => {
 			dispatch({
 				type: OCULTAR_ALERTA,
 			});
-		}, 2000);
+		}, 3000);
 	};
 
 	const mostrarElemento = (msg) => {
