@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/cliente-web-negocios-carlos/static/css/main.85d0a1fd.chunk.css",
+    "main.js": "/cliente-web-negocios-carlos/static/js/main.9bc879e8.chunk.js",
+    "main.js.map": "/cliente-web-negocios-carlos/static/js/main.9bc879e8.chunk.js.map",
+    "runtime-main.js": "/cliente-web-negocios-carlos/static/js/runtime-main.3a407082.js",
+    "runtime-main.js.map": "/cliente-web-negocios-carlos/static/js/runtime-main.3a407082.js.map",
+    "static/js/2.b8a4c89e.chunk.js": "/cliente-web-negocios-carlos/static/js/2.b8a4c89e.chunk.js",
+    "static/js/2.b8a4c89e.chunk.js.map": "/cliente-web-negocios-carlos/static/js/2.b8a4c89e.chunk.js.map",
+    "static/js/3.0b724cbe.chunk.js": "/cliente-web-negocios-carlos/static/js/3.0b724cbe.chunk.js",
+    "static/js/3.0b724cbe.chunk.js.map": "/cliente-web-negocios-carlos/static/js/3.0b724cbe.chunk.js.map",
+    "index.html": "/cliente-web-negocios-carlos/index.html",
+    "static/css/main.85d0a1fd.chunk.css.map": "/cliente-web-negocios-carlos/static/css/main.85d0a1fd.chunk.css.map",
+    "static/js/2.b8a4c89e.chunk.js.LICENSE.txt": "/cliente-web-negocios-carlos/static/js/2.b8a4c89e.chunk.js.LICENSE.txt",
+    "static/media/logocarlos.0e012efb.png": "/cliente-web-negocios-carlos/static/media/logocarlos.0e012efb.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3a407082.js",
+    "static/js/2.b8a4c89e.chunk.js",
+    "static/css/main.85d0a1fd.chunk.css",
+    "static/js/main.9bc879e8.chunk.js"
+  ]
+}
