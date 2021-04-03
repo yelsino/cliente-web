@@ -7,7 +7,7 @@ const CardUser = ({ usuario, cerrarSesion, abrirCard, cerrCard }) => {
 
 	const Logout = () => {
 		cerrarSesion();
-		history.push("/");
+		window.location.replace("https://negocios-carlos.000webhostapp.com/");
 	};
 
 	return (

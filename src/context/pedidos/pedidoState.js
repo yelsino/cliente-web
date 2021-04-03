@@ -1,0 +1,96 @@
+import { useReducer } from "react";
+import clienteAxios from "../../config/axios";
+import {
+	CONFIRMACION_PEDIDO,
+	GENERAR_PEDIDO,
+	OBTENER_PEDIDOS,
+	OBTENER_CODIGO,
+	BORRAR_ESTADO_PEDIDO,
+	SELECCIONAR_PEDIDO,
+} from "../../types";
+
+import PedidoContext from "./pedidoContext";
+import PedidoReducer from "./pedidoReducer.js";
+
+const PedidoState = (props) => {
+	const initialState = {
+		pedidos: [],
+		pedidoseleccionado: null,
+		confirmacion: null,
+		codigopedido: null,
+	};
+
+	// d dispatch para ejecturar las acciones
+	const [state, dispatch] = useReducer(PedidoReducer, initialState);
+
+	// d serie de funciones para el CRUD
+
+	// d crear pedidos
+	const generarNuevoPedido = async (data) => {
+		dispatch({
+			type: CONFIRMACION_PEDIDO,
+			payload: true,
+		});
+		const resultado = await clienteAxios.post("api/pedidos", data);
+		console.log(resultado);
+		if (resultado.status !== 200) {
+			setTimeout(() => {
+				dispatch({
+					type: CONFIRMACION_PEDIDO,
+					payload: false,
+				});
+			}, 1500);
+		} else {
+			dispatch({
+				type: OBTENER_CODIGO,
+				payload: resultado.data.codigo_pedido,
+			});
+		}
+	};
+
+	const obtenerPedidosUser = async () => {
+		try {
+			const resultado = await clienteAxios.get("api/pedidos");
+			console.log(resultado.data);
+			dispatch({
+				type: OBTENER_PEDIDOS,
+				payload: resultado.data,
+			});
+		} catch (error) {
+			console.log(error.response);
+		}
+	};
+
+	const borrarEstadosPedido = () => {
+		localStorage.removeItem("codigo_pedido");
+		dispatch({
+			type: BORRAR_ESTADO_PEDIDO,
+			payload: null,
+		});
+	};
+
+	const seleccionarPedido = (pedidoId) => {
+		dispatch({
+			type: SELECCIONAR_PEDIDO,
+			payload: pedidoId,
+		});
+	};
+
+	return (
+		<PedidoContext.Provider
+			value={{
+				pedidos: state.pedidos,
+				confirmacion: state.confirmacion,
+				codigopedido: state.codigopedido,
+				generarNuevoPedido,
+				borrarEstadosPedido,
+				obtenerPedidosUser,
+				seleccionarPedido,
+			}}
+		>
+			{props.children}
+		</PedidoContext.Provider>
+	);
+};
+
+export default PedidoState;

@@ -27,9 +27,22 @@ export default (state, action) => {
 				(lista) => lista._id === action.payload
 			);
 			localStorage.setItem("lista_actual", JSON.stringify(lista_actual[0]));
+
+			const costo_total = lista_actual[0].cantidad_producto
+				.reduce(
+					(acc, { cantidad_producto, id }) =>
+						acc +
+						cantidad_producto *
+							lista_actual[0].productos.find((e) => e._id === id)
+								.precio_minoreo,
+					0
+				)
+				.toFixed(1);
+			localStorage.setItem("total_lista", JSON.stringify(costo_total));
 			return {
 				...state,
 				listaseleccionada: lista_actual[0],
+				total: costo_total,
 			};
 		case ADD_PRODUCTO_LISTA:
 			return {
@@ -50,10 +63,18 @@ export default (state, action) => {
 				},
 			};
 		case ELIMINAR_LISTA:
-		case ACTUALIZAR_LISTAS:
 			return {
 				...state,
 				listas: action.payload,
+			};
+		case ACTUALIZAR_LISTAS:
+			const copia_listas = state.listas.filter(
+				(e) => e._id !== action.payload._id
+			);
+			localStorage.setItem("lista_actual", JSON.stringify(action.payload));
+			return {
+				...state,
+				listas: [...copia_listas, action.payload],
 			};
 
 		default:

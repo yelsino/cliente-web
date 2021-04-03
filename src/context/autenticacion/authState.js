@@ -27,7 +27,7 @@ const AuthState = (props) => {
 	const registrarUsuario = async (datos) => {
 		try {
 			const respuesta = await clienteAxios.post("api/auth/signup", datos);
-
+			console.log(respuesta.data);
 			dispatch({
 				type: REGISTRO_EXITOSO,
 				payload: respuesta.data,
@@ -78,10 +78,7 @@ const AuthState = (props) => {
 			usuarioAutenticado();
 		} catch (error) {
 			console.log(error.response);
-			const alerta = {
-				msg: "error al iniciar sesion",
-				categoria: "alerta-error",
-			};
+			const alerta = error.response.data.message;
 
 			dispatch({
 				type: LOGIN_ERROR,
@@ -115,11 +112,8 @@ const AuthState = (props) => {
 			const resultado = await clienteAxios.delete(`api/users/${usuarioId}`);
 			console.log(resultado);
 			if (resultado.status === 200) {
-				localStorage.removeItem("usuario");
-				localStorage.removeItem("direccion_actual");
-				localStorage.removeItem("lista_actual");
-				localStorage.removeItem("token");
-				window.location.replace("http://localhost:3000/");
+				localStorage.clear();
+				window.location.replace("https://negocios-carlos.000webhostapp.com/");
 				console.log("cuenta eliminada");
 			} else {
 				return;

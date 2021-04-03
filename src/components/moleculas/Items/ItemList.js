@@ -1,20 +1,21 @@
 import { Link, useHistory } from "react-router-dom";
 import IconDelete from "../../atomos/icons/IconDelete";
 import TextoAzul from "../../atomos/textos/Azul";
+import TextoPlomo from "../../atomos/textos/TextoPlomo";
 
 const ItemList = (props) => {
 	const history = useHistory();
 	return (
-		<div className="flex items-center ">
+		<div className="flex items-center   ">
 			<div
-				className="w-full bg-white shadow-md rounded-lg p-4 my-1 flex justify-between px-20 hover:bg-primario-blue-claro cursor-pointer mr-4 border group"
+				className="w-full bg-white shadow-md rounded-lg p-4 my-1  justify-between px-20 hover:bg-primario-blue-claro cursor-pointer mr-4 border group sm:grid sm:grid-cols-1 sm:gap-5 text-center lg:flex"
 				onClick={() => {}}
 			>
 				<div className="absolute top-2 "></div>
 				<TextoAzul texto={props.textoA} />
-				<div className="flex font-normal">
-					<TextoAzul texto={props.textoB + " = "} />
-					<TextoAzul texto={props.textoC + " S/"} />
+				<div className="flex font-normal justify-center">
+					<TextoPlomo texto={props.textoB + " = "} />
+					<TextoPlomo texto={props.textoC + " S/"} />
 				</div>
 
 				<Link

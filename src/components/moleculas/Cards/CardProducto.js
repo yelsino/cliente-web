@@ -1,16 +1,19 @@
 import BotonVerde from "../../atomos/botones/BotonVerde";
 
-const CardProduct = (props) => {
+const CardProduct = ({ producto }) => {
 	const {
-		id,
-		imgURL,
-		medida,
 		nombre,
-		peso,
-		precio,
-		addProducto,
-		obtenerProductoSeleccionado,
-	} = props;
+		peso_minoreo,
+		precio_minoreo,
+		medida_minoreo,
+		categoria,
+		peso_mayoreo,
+		medidada_mayoreo,
+		precio_mayoreo,
+		stock,
+		cantidad_minima,
+		imgURL,
+	} = producto;
 
 	return (
 		<div className="m-2 col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-1 xl:col-span-1 flex flex-col items-center">
@@ -23,20 +26,13 @@ const CardProduct = (props) => {
 						<p className="font-bold text-gray-800 text-lg  "> {nombre} </p>
 
 						<span className="text-xl text-red-500 font-semibold">
-							S/ {precio}
+							S/ {precio_minoreo}
 						</span>
 					</div>
 					<div className="flex items-center justify-between">
 						<div className="text-sm text-gray-600 font-light">
-							{peso} {medida}
+							{peso_minoreo} {medida_minoreo}
 						</div>
-
-						<BotonVerde
-							onBtn={() => {
-								addProducto(id);
-							}}
-							texto={"agregar"}
-						/>
 					</div>
 				</div>
 			</div>

@@ -1,8 +1,12 @@
 import React from "react";
 import LogoImg from "../../assets/img/logocarlos.png";
-const Logo = () => {
+const Logo = (props) => {
 	return (
-		<div className=" p-4 w-40 flex justify-center items-center">
+		<div
+			className={` flex justify-center items-center ${
+				props.style ? props.style : "w-40 p-4"
+			}`}
+		>
 			<img src={LogoImg} />
 		</div>
 	);

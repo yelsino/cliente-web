@@ -21,9 +21,11 @@ export default (state, action) => {
 				direccionactual: action.payload,
 			};
 		case CREAR_DIRECCION:
+			localStorage.setItem("direccion_actual", JSON.stringify(action.payload));
 			return {
 				...state,
 				direcciones: [...state.direcciones, action.payload],
+				direccionactual: action.payload,
 			};
 		case ELIMINAR_DIRECCIONES:
 			return {

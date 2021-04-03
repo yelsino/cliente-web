@@ -20,6 +20,7 @@ const DireccionState = (props) => {
 		direcciones: [],
 		direccionactual: null,
 	};
+	// direccionactual: !direccion_actual ? null : direccion_actual,
 
 	// d dispatch para ejecturar las acciones
 	const [state, dispatch] = useReducer(DireccionReducer, initialState);
@@ -57,6 +58,8 @@ const DireccionState = (props) => {
 				type: CREAR_DIRECCION,
 				payload: respuesta.data,
 			});
+
+			dispatch({});
 		} catch (error) {
 			console.log(error.response);
 		}

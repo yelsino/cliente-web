@@ -9,6 +9,8 @@ import ListaContext from "../../../context/listas/listaContext";
 import Lista from "../../organismos/lista";
 import AuthContext from "../../../context/autenticacion/authContext";
 import DireccionContext from "../../../context/direcciones/direccionContext";
+import PedidoContext from "../../../context/pedidos/pedidoContext";
+import VerPedido from "../../organismos/verPedido";
 
 const Admin = () => {
 	const listasContext = useContext(ListaContext);
@@ -16,12 +18,15 @@ const Admin = () => {
 	const authContext = useContext(AuthContext);
 	const { usuarioAutenticado } = authContext;
 	const direccionesContext = useContext(DireccionContext);
-	const {direcciones, obtenerDirecciones} = direccionesContext
+	const { direcciones, obtenerDirecciones } = direccionesContext;
+	const pedidosContext = useContext(PedidoContext);
+	const { pedidos, obtenerPedidosUser } = pedidosContext;
 
 	useEffect(() => {
 		obtenerListas();
 		usuarioAutenticado();
-		obtenerDirecciones()
+		obtenerDirecciones();
+		obtenerPedidosUser();
 	}, []);
 	return (
 		<Fragment>
@@ -34,7 +39,10 @@ const Admin = () => {
 						<Switch>
 							<Route exact path={"/admin/listas"} component={Listas} />
 							<Route path={"/admin/listas/:listaId"} component={Lista} />
+							{/*  */}
 							<Route exact path={"/admin/pedidos"} component={Pedidos} />
+							<Route path={"/admin/pedidos/:pedidoId"} component={VerPedido} />
+							{/*  */}
 							<Route exact path={"/admin/reclamos"} component={Reclamos} />
 							<Route exact path={"/admin/cuenta"} component={Cuenta} />
 						</Switch>

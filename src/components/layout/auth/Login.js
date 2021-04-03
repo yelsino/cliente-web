@@ -5,6 +5,7 @@ import AuthContext from "../../../context/autenticacion/authContext";
 import Logo from "../../atomos/Logo";
 import InputRdVerde from "../../atomos/inputs/InputRdVerde";
 import TextoRojo from "../../atomos/textos/TextoRojo";
+import Navbar2 from "../../moleculas/Navbar2";
 
 const Login = (props) => {
 	// extraer valores del context
@@ -53,30 +54,13 @@ const Login = (props) => {
 
 	return (
 		<div className="bg-primario-green p-8 h-screen  flex justify-center flex-col items-center">
-			<ul className="flex justify-end absolute top-10 right-10">
-				<Link
-					to={"/registro"}
-					className="text-primario-green-pure text-base font-bold mx-4 hover:text-green-400"
-				>
-					{" "}
-					REGISTRARSE{" "}
-				</Link>
-				<Link
-					to={"/"}
-					className="text-green-800 text-base font-bold mx-4 hover:text-green-400"
-				>
-					{" "}
-					INICIO{" "}
-				</Link>
-			</ul>
+			<Navbar2 />
 
 			<div className="flex justify-center items-center flex-col bg-white w-96 px-6 py-6 rounded-lg shadow-xl">
-				{alerta ? (
-					<p className={`alerta ${alerta.categoria}`}>{alerta.msg}</p>
-				) : null}
 				<div className="contenedor-form sombra-dark"></div>
 
 				<Logo />
+				{alerta ? <p className="text-primario-red">{alerta.msg}</p> : null}
 				<InputRdVerde
 					handleChange={onchangeInicio}
 					atributos={{

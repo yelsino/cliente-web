@@ -4,7 +4,7 @@ import ItemReclamo from "../../moleculas/Items/ItemReclamo";
 
 const Reclamos = () => {
 	return (
-		<div className="mx-20 my-16  w-full">
+		<div className="  w-full">
 			<div className="mt-10">
 				<SubTitulo texto={"Mis Pedidos"} />
 			</div>

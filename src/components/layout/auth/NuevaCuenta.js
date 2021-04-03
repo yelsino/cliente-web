@@ -1,10 +1,11 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import AuthContext from "../../../context/autenticacion/authContext";
-import { Link } from "react-router-dom";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import InputRdGreen from "../../atomos/inputs/InputRdVerde";
-import TextoAzul from "../../atomos/textos/Azul";
 import Logo from "../../atomos/Logo";
+import Navbar2 from "../../moleculas/Navbar2";
+import BotonAzul from "../../atomos/botones/BotonAzul";
+import InputRdVerde from "../../atomos/inputs/InputRdVerde";
 
 const NuevaCuenta = (props) => {
 	// d extraer  valores del contexto
@@ -83,83 +84,66 @@ const NuevaCuenta = (props) => {
 	};
 
 	return (
-		<Fragment>
-			<ul className=" flex justify-end m-8">
-				<Link
-					to={"/"}
-					className="text-green-800 text-base font-bold mx-4 hover:text-green-400"
+		<div>
+			<Navbar2 />
+			<div className="flex justify-center items-center h-screen bg-primario-green">
+				<form
+					onSubmit={onSubmit}
+					className="flex justify-center items-center flex-col bg-white w-96 px-6 py-6 rounded-lg shadow-xl"
 				>
-					{" "}
-					TENGO CUENTA{" "}
-				</Link>
-				<Link
-					to={"/"}
-					className="text-green-800 text-base font-bold mx-4 hover:text-green-400"
-				>
-					{" "}
-					INICIO{" "}
-				</Link>
-			</ul>
+					<Logo />
+					{alerta ? <p className="text-primario-red"> {alerta.msg} </p> : null}
+					<InputRdVerde
+						handleChange={onChangeLogin}
+						atributos={{
+							id: "username",
+							name: "username",
+							value: username,
+							type: "text",
+							placeholder: "nombre de usuario",
+							titulo: "nombres de usuario",
+						}}
+					/>
+					<InputRdVerde
+						handleChange={onChangeLogin}
+						atributos={{
+							id: "email",
+							name: "email",
+							value: email,
+							type: "email",
+							placeholder: "correo electronico",
+							titulo: "correo electronico",
+						}}
+					/>
 
-			<form onSubmit={onSubmit} className="flex flex-col items-center">
-				<div>
-					{alerta ? (
-						<p className={`alerta ${alerta.categoria}`}> {alerta.msg} </p>
-					) : null}
-				</div>
-				<Logo />
+					<InputRdVerde
+						handleChange={onChangeLogin}
+						atributos={{
+							id: "password",
+							name: "password",
+							value: password,
+							type: "password",
+							placeholder: "contraseña",
+							titulo: "contraseña",
+						}}
+					/>
 
-				<InputRdGreen
-					handleChange={onChangeLogin}
-					atributos={{
-						id: "username",
-						name: "username",
-						value: username,
-						type: "text",
-						placeholder: "nombre de usuario",
-					}}
-				/>
-				<InputRdGreen
-					handleChange={onChangeLogin}
-					atributos={{
-						id: "email",
-						name: "email",
-						value: email,
-						type: "email",
-						placeholder: "correo electronico",
-					}}
-				/>
+					<InputRdVerde
+						handleChange={onChangeLogin}
+						atributos={{
+							id: "confirmar",
+							name: "confirmar",
+							value: confirmar,
+							type: "password",
+							placeholder: "confirmar contraseña ",
+							titulo: "confirmar contraseña",
+						}}
+					/>
 
-				<InputRdGreen
-					handleChange={onChangeLogin}
-					atributos={{
-						id: "password",
-						name: "password",
-						value: password,
-						type: "password",
-						placeholder: "contraseña",
-					}}
-				/>
-
-				<InputRdGreen
-					handleChange={onChangeLogin}
-					atributos={{
-						id: "confirmar",
-						name: "confirmar",
-						value: confirmar,
-						type: "password",
-						placeholder: "confirmar contraseña ",
-					}}
-				/>
-
-				<button
-					type="submit"
-					className="bg-blue-100 p-2 px-6 text-blue-700 rounded-md font-bold hover:bg-blue-600 hover:text-white my-2"
-				>
-					Iniciar Sesion
-				</button>
-			</form>
-		</Fragment>
+					<BotonAzul texto={"Registrarse"} type={"submit"} />
+				</form>
+			</div>
+		</div>
 	);
 };
 

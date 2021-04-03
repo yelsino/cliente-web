@@ -17,10 +17,13 @@ import listaReducer from "./listaReducer";
 
 const ListaState = (props) => {
 	const json_lista_actual = localStorage.getItem("lista_actual");
+	const json_total_lista = localStorage.getItem("total_lista");
 	const lista_actual = JSON.parse(json_lista_actual);
+	const total_lista = Number(JSON.parse(json_total_lista));
 	const initialState = {
 		listas: [],
 		listaseleccionada: !lista_actual ? null : lista_actual,
+		total: !total_lista ? 0 : total_lista,
 	};
 
 	// d dispatch para ejecturar las acciones
@@ -188,11 +191,14 @@ const ListaState = (props) => {
 		}
 	};
 
+	const costoTotalList = async () => {};
+
 	return (
 		<ListaContext.Provider
 			value={{
 				listas: state.listas,
 				listaseleccionada: state.listaseleccionada,
+				total: state.total,
 				obtenerListas,
 				crearLista,
 				listaActual,
