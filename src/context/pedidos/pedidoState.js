@@ -27,24 +27,35 @@ const PedidoState = (props) => {
 
 	// d crear pedidos
 	const generarNuevoPedido = async (data) => {
+		console.log(data);
+
 		dispatch({
 			type: CONFIRMACION_PEDIDO,
 			payload: true,
 		});
 		const resultado = await clienteAxios.post("api/pedidos", data);
-		console.log(resultado);
-		if (resultado.status !== 200) {
-			setTimeout(() => {
-				dispatch({
-					type: CONFIRMACION_PEDIDO,
-					payload: false,
-				});
-			}, 1500);
-		} else {
-			dispatch({
-				type: OBTENER_CODIGO,
-				payload: resultado.data.codigo_pedido,
-			});
+		try {
+			console.log(resultado);
+			if (resultado.status !== 200) {
+				console.log("si es 200");
+				setTimeout(() => {
+					dispatch({
+						type: CONFIRMACION_PEDIDO,
+						payload: false,
+					});
+				}, 2500);
+			} else {
+				setTimeout(() => {
+					dispatch({
+						type: OBTENER_CODIGO,
+						payload: resultado.data.codigo_pedido,
+					});
+				}, 2000);
+				console.log("dasdasdasasdasasdsa");
+			}
+		} catch (error) {
+			console.log();
+			console.log(error);
 		}
 	};
 
@@ -63,6 +74,8 @@ const PedidoState = (props) => {
 
 	const borrarEstadosPedido = () => {
 		localStorage.removeItem("codigo_pedido");
+		localStorage.removeItem("lista_actual");
+		localStorage.removeItem("total_lista");
 		dispatch({
 			type: BORRAR_ESTADO_PEDIDO,
 			payload: null,
@@ -75,6 +88,20 @@ const PedidoState = (props) => {
 			payload: pedidoId,
 		});
 	};
+	// d restarStock de productos
+	const restarStockProductos = async (lista_actual) => {
+		const copy_lista_actual = lista_actual.cantidad_producto;
+		const copy_productos = lista_actual.productos;
+		await copy_lista_actual.forEach((e) => {
+			clienteAxios.put(`api/productos/${e.id}`, {
+				stock:
+					Number(
+						copy_productos.find((producto) => producto._id === e.id).stock
+					) - Number(e.cantidad_producto),
+			});
+		});
+		console.log("operacion finalizada");
+	};
 
 	return (
 		<PedidoContext.Provider
@@ -86,6 +113,7 @@ const PedidoState = (props) => {
 				borrarEstadosPedido,
 				obtenerPedidosUser,
 				seleccionarPedido,
+				restarStockProductos,
 			}}
 		>
 			{props.children}

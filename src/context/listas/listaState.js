@@ -176,13 +176,10 @@ const ListaState = (props) => {
 					`/api/listas/${lista_actual._id}`,
 					lista
 				);
-				const copia_listas = await state.listas.filter(
-					(e) => e._id !== lista_actual._id
-				);
-				// copia_listas.push(resultado.data);
+
 				dispatch({
 					type: ACTUALIZAR_LISTAS,
-					payload: [...copia_listas, resultado.data],
+					payload: resultado.data,
 				});
 			} catch (error) {
 				console.log(error.response);
@@ -190,8 +187,6 @@ const ListaState = (props) => {
 			}
 		}
 	};
-
-	const costoTotalList = async () => {};
 
 	return (
 		<ListaContext.Provider

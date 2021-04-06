@@ -18,9 +18,11 @@ export default (state, action) => {
 				listas: action.payload,
 			};
 		case CREAR_LISTAS:
+			localStorage.setItem("lista_actual", JSON.stringify(action.payload));
 			return {
 				...state,
 				listas: [...state.listas, action.payload],
+				listaseleccionada: action.payload,
 			};
 		case LISTA_ACTUAL:
 			const lista_actual = state.listas.filter(
@@ -71,7 +73,12 @@ export default (state, action) => {
 			const copia_listas = state.listas.filter(
 				(e) => e._id !== action.payload._id
 			);
+			localStorage.removeItem("lista_actual");
 			localStorage.setItem("lista_actual", JSON.stringify(action.payload));
+
+			console.log("action.payload");
+			console.log(action.payload);
+			console.log("action.payload");
 			return {
 				...state,
 				listas: [...copia_listas, action.payload],

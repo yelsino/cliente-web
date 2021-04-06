@@ -40,6 +40,7 @@ const Pedido = () => {
 		codigopedido,
 		generarNuevoPedido,
 		borrarEstadosPedido,
+		restarStockProductos,
 	} = pedidosContext;
 
 	const alertaContext = useContext(AlertaContext);
@@ -48,6 +49,9 @@ const Pedido = () => {
 	const json_usuario = localStorage.getItem("usuario");
 	const usuarioLS = JSON.parse(json_usuario);
 	const { celular, dni, email, username } = usuarioLS;
+	const json_direccion = localStorage.getItem("direccion_actual");
+	const direccionLS = JSON.parse(json_direccion);
+
 	// d ESTADOS
 	const [modal, openModal] = useState(false);
 
@@ -59,6 +63,7 @@ const Pedido = () => {
 
 	const generarPedido = (e) => {
 		e.preventDefault();
+		restarStockProductos(listaseleccionada);
 		if (!listaseleccionada) {
 			mostrarAlerta("seleccione una de sus listas para realziar el pedido");
 			return;
@@ -66,7 +71,7 @@ const Pedido = () => {
 		const nuevo_pedido = {
 			creador: usuarioLS._id,
 			lista: listaseleccionada._id,
-			direccion: direccionactual._id,
+			direccion: direccionLS._id,
 			copia_pedido: [
 				{ datos_lista: listaseleccionada },
 				{ abono: 0 },
@@ -87,8 +92,8 @@ const Pedido = () => {
 	}, []);
 	return (
 		<div className="flex items-center flex-col justify-center h-screen mb-10">
-			<h3 className="text-5xl  text-center my-20 text-primario-blue">
-				GENERAR PEDIDO
+			<h3 className="text-5xl  text-center my-10 text-primario-blue">
+				RESUMEN DE PEDIDO
 			</h3>
 			{alerta ? (
 				<p className="text-primario-red text-xl">{alerta.msg}</p>
@@ -123,6 +128,19 @@ const Pedido = () => {
 								<span className="font-bold text-gray-600">email: </span>
 								<span className="text-gray-700 tracking-widest">{email}</span>
 							</p>
+
+							<p className="my-4">
+								<span className="font-bold text-gray-600">direccion: </span>
+								<span className="text-gray-700 tracking-widest">
+									{direccionLS.nombre}
+								</span>
+							</p>
+							<p className="my-4">
+								<span className="font-bold text-gray-600">refencia: </span>
+								<span className="text-gray-700 tracking-widest">
+									{direccionLS.referencia}
+								</span>
+							</p>
 						</div>
 					</div>
 
@@ -132,45 +150,33 @@ const Pedido = () => {
 					<div className="flex justify-center ">
 						<div>
 							<SubTitulo texto={"PEDIDO"} />
-							<p className="font-bold text-gray-600 mt-4">seleccionar lista</p>
+							<p className="text-primario-blue font-bold my-2 mt-4">
+								seleccione su lista a pedir
+							</p>
 
 							<div className="relative mb-4 ">
 								<div onChange={onChangeListas}>
-									{listas.map((e) => (
-										<div
-											onClick={() => {
-												listaActual(e._id);
-											}}
-											key={e._id}
-											className={`p-4 bg-primario-blue-claro text-primario-blue font-semibold focus:outline-none w-96 flex justify-center px-4 tracking-wide mb-2 cursor-pointer ${
-												e._id === listaseleccionada._id
-													? " border-primario-blue border-4"
-													: ""
-											}`}
-										>
-											{e.nombre}
-										</div>
-									))}
+									{listas.map((e) => {
+										if (e.productos.length > 0) {
+											return (
+												<div
+													onClick={() => {
+														listaActual(e._id);
+													}}
+													key={e._id}
+													className={`p-4 bg-primario-blue-claro text-primario-blue font-semibold focus:outline-none w-96 flex justify-center px-4 tracking-wide mb-2 cursor-pointer rounded-lg ${
+														e._id === listaseleccionada._id
+															? " border-primario-blue border-4"
+															: ""
+													}`}
+												>
+													{e.nombre}
+												</div>
+											);
+										}
+									})}
 								</div>
 							</div>
-
-							<p className="font-bold text-gray-600">direccion de envio</p>
-							<p className="p-4 bg-primario-blue-claro text-primario-blue font-semibold focus:outline-none w-96 flex justify-center px-4 tracking-wide mb-2 cursor-pointer">
-								{direccionactual && direccionactual.nombre}
-							</p>
-							{/* <div>
-								{direcciones.map((e) => (
-									<div
-										className='className="p-4 bg-primario-blue-claro text-primario-blue font-semibold focus:outline-none w-96 flex justify-center px-4 tracking-wide py-4 cursor-pointer'
-										onClick={() => {
-											seleccionarDireccion(e._id);
-										}}
-										key={e._id}
-									>
-										{e.nombre}
-									</div>
-								))}
-							</div> */}
 						</div>
 					</div>
 				</div>
@@ -205,10 +211,18 @@ const Pedido = () => {
 						<div className="flex justify-center">
 							<BotonVerde
 								onBtn={generarPedido}
-								texto={"GENERAR"}
+								texto={"FINALIZAR"}
 								style={"my-10 mx-auto"}
 							/>
 						</div>
+						<p
+							onClick={() => {
+								window.location.replace("http://localhost:3000/tienda");
+							}}
+							className="text-primario-red text-center cursor-pointer"
+						>
+							cancelar proceso
+						</p>
 					</div>
 				</div>
 			</div>
@@ -243,7 +257,7 @@ const Pedido = () => {
 								<button
 									onClick={() => {
 										borrarEstadosPedido();
-										history.push("/tienda");
+										window.location.replace("http://localhost:3000/tienda");
 									}}
 									className="bg-black px-14 py-2 text-2xl text-white rounded-3xl "
 								>

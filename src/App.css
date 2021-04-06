@@ -71,6 +71,16 @@ h3,
 	-ms-user-select: none;
 	user-select: none;
 }
+button:focus {
+	outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+input[type=number] { -moz-appearance:textfield; }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

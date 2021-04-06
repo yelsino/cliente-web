@@ -27,8 +27,7 @@ export default (state, action) => {
 		case BORRAR_ESTADO_PEDIDO:
 			return {
 				...state,
-				confirmacion: action.payload,
-				codigopedido: action.payload,
+				confirmacion:action.payload
 			};
 		case SELECCIONAR_PEDIDO:
 			const pedido = state.pedidos.filter((e) => e._id === action.payload);

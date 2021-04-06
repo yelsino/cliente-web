@@ -113,7 +113,8 @@ const AuthState = (props) => {
 			console.log(resultado);
 			if (resultado.status === 200) {
 				localStorage.clear();
-				window.location.replace("https://negocios-carlos.000webhostapp.com/");
+				window.location.replace("http://localhost:3000/");
+				// window.location.replace("https://negocios-carlos.000webhostapp.com/");
 				console.log("cuenta eliminada");
 			} else {
 				return;
@@ -122,6 +123,15 @@ const AuthState = (props) => {
 			console.log(error.response);
 		}
 	};
+
+	const generarCodigoDeVerificacion = async (data) => {
+		try {
+			const resultado = await clienteAxios.post(`api/codigos`,data)
+			console.log(resultado)
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	return (
 		<AuthContext.Provider
@@ -136,6 +146,7 @@ const AuthState = (props) => {
 				cerrarSesion,
 				actualizarCuentaDeUsuario,
 				eliminarCuentadeUsuario,
+				generarCodigoDeVerificacion,
 			}}
 		>
 			{" "}

@@ -42,13 +42,6 @@ const Login = (props) => {
 		e.preventDefault();
 		console.log("onsubmit");
 
-		// validar que no haya campos vacios
-		// if (email.trim() === "" || password.trim() === "") {
-		// 	mostrarAlerta("todos los campos son obligatorios", "alerta-error");
-		// 	return;
-		// }
-
-		//  pasarlo al action
 		iniciarSesion({ email, password });
 	};
 
@@ -56,7 +49,7 @@ const Login = (props) => {
 		<div className="bg-primario-green p-8 h-screen  flex justify-center flex-col items-center">
 			<Navbar2 />
 
-			<div className="flex justify-center items-center flex-col bg-white w-96 px-6 py-6 rounded-lg shadow-xl">
+			<div className="flex justify-center items-center flex-col bg-white w-96 px-6 py-4 rounded-lg shadow-xl">
 				<div className="contenedor-form sombra-dark"></div>
 
 				<Logo />
@@ -90,7 +83,7 @@ const Login = (props) => {
 				<button
 					type="button"
 					onClick={onSubmit}
-					className="bg-blue-100 p-2 px-6 text-primario-blue rounded-md font-bold hover:bg-primario-blue hover:text-white my-2"
+					className="bg-primario-blue-claro p-4 px-8 text-primario-blue rounded-md font-bold  outline-none hover:bg-primario-blue hover:text-white text-lg"
 				>
 					Iniciar Sesion
 				</button>

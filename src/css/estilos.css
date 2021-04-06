@@ -1,0 +1,10 @@
+.centrar-position {
+  width: 500px;
+  position: absolute;
+  left: 50%;
+  margin-left: -250px;
+}
+
+.withporcent{
+  width: 20px;
+}

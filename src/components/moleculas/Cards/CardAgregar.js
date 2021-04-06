@@ -76,7 +76,7 @@ const CardAgregar = ({ producto }) => {
 						onClick={agregarProducto}
 						className="border-2 border-primario-blue bg-primario-blue text-white font-bold px-4 py-2 rounded-md hover:text-blue-100"
 					>
-						ADD
+						añadir
 					</span>
 				)}
 			</button>

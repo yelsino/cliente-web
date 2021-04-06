@@ -7,7 +7,8 @@ const CardUser = ({ usuario, cerrarSesion, abrirCard, cerrCard }) => {
 
 	const Logout = () => {
 		cerrarSesion();
-		window.location.replace("https://negocios-carlos.000webhostapp.com/");
+		// window.location.replace("https://negocios-carlos.000webhostapp.com/");
+		window.location.replace("http://localhost:3000/tienda");
 	};
 
 	return (
@@ -15,7 +16,7 @@ const CardUser = ({ usuario, cerrarSesion, abrirCard, cerrCard }) => {
 			<div className="w-16 h-16  rounded-lg transform rotate-45 self-center absolute z-10 -top-px shadow-md border border-blue-500"></div>
 
 			<div
-				className="border rounded-lg border-blue-500 w-64 relative z-40 shadow-md 
+				className="border rounded-lg border-primario-blue w-64 relative z-40 shadow-md 
             bg-white flex flex-col justify-between
             "
 			>
@@ -34,7 +35,7 @@ const CardUser = ({ usuario, cerrarSesion, abrirCard, cerrCard }) => {
 							cerrCard(false);
 							abrirCard(true);
 						}}
-						className="block hover:bg-blue-500 hover:text-white text-blue-500 border border-blue-500 font-bold text-center cursor-pointer py-2 border-b-0 border-r-0 border-l-0 w-full"
+						className="block hover:bg-primario-blue hover:text-white text-blue-500 border border-primario-blue font-bold text-center cursor-pointer py-2 border-b-0 border-r-0 border-l-0 w-full "
 					>
 						Crear Lista
 					</button>
@@ -45,7 +46,7 @@ const CardUser = ({ usuario, cerrarSesion, abrirCard, cerrCard }) => {
 					>
 						<button
 							onClick={Logout}
-							className="block hover:bg-blue-500 hover:text-white text-blue-500 border border-blue-500 font-bold text-center cursor-pointer py-2 border-b-0 border-r-0 border-l-0 w-full"
+							className="block hover:bg-primario-blue hover:text-white text-blue-500 border border-primario-blue font-bold text-center cursor-pointer py-2 border-b-0 border-r-0 border-l-0 w-full"
 						>
 							Cerrar Sesion
 						</button>

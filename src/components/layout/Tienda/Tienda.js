@@ -107,22 +107,47 @@ const Tienda = () => {
 	const [datosdireccion, setDireccion] = useState({
 		creador: usuario ? usuario._id : "",
 		nombre: "",
-		refencia: "",
+		referencia: "",
 	});
 
-	const { nombre: nombre_direccion, refencia, creador } = datosdireccion;
+	const { nombre: nombre_direccion, referencia, creador } = datosdireccion;
 
 	const onChangeCliente = (e) => {
 		setCliente({
-			...usuario,
+			...datoscliente,
 			[e.target.name]: e.target.value,
 		});
+		if (e.target.name === "celular" && e.target.value.length > 9) {
+			setCliente({
+				...datoscliente,
+				celular: e.target.value.substring(0, e.target.value.length - 1),
+			});
+		}
+		if (e.target.name === "dni" && e.target.value.length > 11) {
+			setCliente({
+				...datoscliente,
+				dni: e.target.value.substring(0, e.target.value.length - 1),
+			});
+		}
 	};
 	const onChangeDireccion = (e) => {
 		setDireccion({
 			...datosdireccion,
 			[e.target.name]: e.target.value,
 		});
+
+		if (e.target.name === "nombre" && e.target.value.length > 50) {
+			setDireccion({
+				...datosdireccion,
+				nombre: e.target.value.substring(0, e.target.value.length - 1),
+			});
+		}
+		if (e.target.name === "referencia" && e.target.value.length > 100) {
+			setDireccion({
+				...usuario,
+				referencia: e.target.value.substring(0, e.target.value.length - 1),
+			});
+		}
 	};
 
 	const generarPedido = (e) => {
@@ -130,8 +155,8 @@ const Tienda = () => {
 		setCliente({
 			username: usuario.username,
 			email: usuario.email,
-			celular: usuario.celular,
-			dni: usuario.dni,
+			celular: !usuario.celular ? "" : usuario.celular,
+			dni: !usuario.dni ? "" : usuario.dni,
 		});
 
 		setDireccion({
@@ -147,7 +172,7 @@ const Tienda = () => {
 			celular === "" ||
 			dni === "" ||
 			nombre_direccion === "" ||
-			refencia === ""
+			referencia === ""
 		) {
 			mostrarAlerta("todos los campos son obligarorios");
 			return;
@@ -164,7 +189,9 @@ const Tienda = () => {
 			mostrarAlerta("debe seleccionar una de sus direcciones para continuar");
 			return;
 		}
-		listaActual(listaseleccionada._id);
+		if (!listaseleccionada) {
+			listaActual(listas[0]._id);
+		}
 		if (username === "" || email === "" || celular === "" || dni === "") {
 			mostrarAlerta("todos los campos son obligarorios");
 			return;
@@ -243,6 +270,15 @@ const Tienda = () => {
 									)}
 									<BotonAzul
 										onBtn={() => {
+											if (!listaseleccionada) {
+												mostrarAlerta("crea una lista de pedido para iniciar");
+												return;
+											}
+											if (listaseleccionada.productos.length === 0) {
+												mostrarAlerta("crea una lista de pedido para iniciar");
+												return;
+											}
+
 											guardarCambiosEnLista(listaseleccionada);
 											generarPedido();
 											// history.push("/pedido");
@@ -342,7 +378,11 @@ const Tienda = () => {
 										))}
 									</div>
 								) : (
-									<p className="text-primario-blue text-center marginporciento20 text-lg">
+									<p
+										className={` text-center marginporciento20 text-lg ${
+											alerta ? "text-primario-red" : "text-primario-blue"
+										}`}
+									>
 										Lista Vacia, <br /> añada productos
 									</p>
 								)}
@@ -401,17 +441,27 @@ const Tienda = () => {
 
 			{/*  */}
 			{/* DATOS DE FACTURACION */}
+			{/*  */}
 			{modal && (
-				<Modal style={"bg-gray-700 opacity-75 "} position={"z-40"}>
+				<Modal style={"bg-gray-800 opacity-60 "} position={"z-40"}>
 					<Notificacion
 						texto={"X"}
 						onBtn={() => {
 							setModal(false);
 						}}
 					/>
-					<div className="bg-white p-8 mb-10">
-						{alerta && <p className="py-4 text-primario-red"> {alerta.msg}</p>}
+					<div className="bg-white p-8">
+						{alerta && (
+							<p className="py-4 text-lg text-primario-red"> {alerta.msg}</p>
+						)}
 						<SubTitulo texto={"Datos de Envio"} />
+						<p>
+							Advertencia :{" "}
+							<span className="text-primario-red">
+								los pedidos con lugar de envio fuera de satipo, no seran
+								procesados
+							</span>
+						</p>
 						<div className="grid grid-cols-2 gap-5">
 							<div className="flex items-center">
 								<p className="mr-5 w-24 ">NOMBRES</p>
@@ -424,6 +474,7 @@ const Tienda = () => {
 										placeholder: "ejemplo: Juan Garcia",
 									}}
 									handleChange={onChangeCliente}
+									style={"border"}
 								/>
 							</div>
 							<div className="flex items-center">
@@ -437,6 +488,7 @@ const Tienda = () => {
 										placeholder: "correo electronico",
 									}}
 									handleChange={onChangeCliente}
+									style={"border"}
 								/>
 							</div>
 							<div className="flex items-center">
@@ -446,23 +498,26 @@ const Tienda = () => {
 										id: "celular",
 										name: "celular",
 										value: celular,
-										type: "text",
+										type: "number",
 										placeholder: "numero de celular",
 									}}
 									handleChange={onChangeCliente}
+									style={"border"}
 								/>
 							</div>
 							<div className="flex items-center">
-								<p className="mr-5 w-24">DNI</p>
+								<p className="mr-5 w-24">DNI/RUC</p>
 								<InputRdVerde
 									atributos={{
 										id: "dni",
 										name: "dni",
 										value: dni,
-										type: "text",
+										type: "number",
 										placeholder: "documento de identidad",
+										max: 11,
 									}}
 									handleChange={onChangeCliente}
+									style={"border"}
 								/>
 							</div>
 						</div>
@@ -500,7 +555,7 @@ const Tienda = () => {
 									</div>
 								) : (
 									<div className="flex justify-between">
-										<p>seleccionar direccion</p>
+										<p>selecciona una direccion</p>
 										{direcciones.length > 0 && !newdireccion && (
 											<button
 												onClick={() => {
@@ -517,10 +572,18 @@ const Tienda = () => {
 												onClick={() => {
 													const direcion = {
 														nombre: nombre_direccion,
-														referencia: refencia,
+														referencia: referencia,
 														creador: usuario._id,
 													};
-													console.log(direcion);
+													if (
+														nombre_direccion.length < 5 ||
+														referencia.length < 5
+													) {
+														mostrarAlerta(
+															"los campos deben tener almennos 5 valores"
+														);
+														return;
+													}
 													crearDireccionNueva(direcion);
 													showInputs(false);
 													setNewDireecion(false);
@@ -538,6 +601,7 @@ const Tienda = () => {
 								<div>
 									{direcciones.map((e) => (
 										<div
+											key={e._id}
 											onClick={() => {
 												seleccionarDireccion(e._id);
 											}}
@@ -595,6 +659,7 @@ const Tienda = () => {
 											placeholder: "direccion de envio",
 										}}
 										handleChange={onChangeDireccion}
+										style={"border"}
 									/>
 								</div>
 
@@ -603,12 +668,13 @@ const Tienda = () => {
 									<InputRdVerde
 										atributos={{
 											id: "refencia",
-											name: "refencia",
-											value: refencia,
+											name: "referencia",
+											value: referencia,
 											type: "text",
 											placeholder: "referencia de direccion",
 										}}
 										handleChange={onChangeDireccion}
+										style={"border"}
 									/>
 								</div>
 							</div>

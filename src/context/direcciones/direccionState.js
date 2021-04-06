@@ -20,7 +20,6 @@ const DireccionState = (props) => {
 		direcciones: [],
 		direccionactual: null,
 	};
-	// direccionactual: !direccion_actual ? null : direccion_actual,
 
 	// d dispatch para ejecturar las acciones
 	const [state, dispatch] = useReducer(DireccionReducer, initialState);

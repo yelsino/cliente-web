@@ -6,6 +6,9 @@ import Logo from "../../atomos/Logo";
 import Navbar2 from "../../moleculas/Navbar2";
 import BotonAzul from "../../atomos/botones/BotonAzul";
 import InputRdVerde from "../../atomos/inputs/InputRdVerde";
+import SubTitulo from "../../atomos/textos/SubTitulo";
+import Modal from "../../plantillas/Modal";
+import ElementoContext from "../../../context/elementos/elementContext";
 
 const NuevaCuenta = (props) => {
 	// d extraer  valores del contexto
@@ -13,7 +16,15 @@ const NuevaCuenta = (props) => {
 	const { alerta, mostrarAlerta } = alertaContext;
 
 	const authContext = useContext(AuthContext);
-	const { mensaje, autenticado, registrarUsuario } = authContext;
+	const {
+		mensaje,
+		autenticado,
+		registrarUsuario,
+		generarCodigoDeVerificacion,
+	} = authContext;
+
+	const elementoContext = useContext(ElementoContext)
+	const { elemento,crearElemento } = elementoContext;
 
 	// en caso de que el usuario se haya autenticado o registrador o sea un registro duplicado
 
@@ -48,7 +59,15 @@ const NuevaCuenta = (props) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		// validar campos vacios
+		
+		for(let i=0; i<username.length; i++){
+			var numeros="0123456789";
+      if (numeros.indexOf(username.charAt(i),0)!=-1){
+				mostrarAlerta("el nombre no debe contener numeros");
+         return 
+      }
+   }
+
 		if (
 			username.trim() === "" ||
 			email.trim() === "" ||
@@ -74,11 +93,13 @@ const NuevaCuenta = (props) => {
 			return;
 		}
 
-		registrarUsuario({
-			username,
-			email,
-			password,
-		});
+		crearElemento()
+		generarCodigoDeVerificacion({ email });
+		// registrarUsuario({
+		// 	username,
+		// 	email,
+		// 	password,
+		// });
 
 		console.log("registro exitoso");
 	};
@@ -91,7 +112,8 @@ const NuevaCuenta = (props) => {
 					onSubmit={onSubmit}
 					className="flex justify-center items-center flex-col bg-white w-96 px-6 py-6 rounded-lg shadow-xl"
 				>
-					<Logo />
+					{/* <Logo /> */}
+					<SubTitulo texto={"Nueva Cuenta"} />
 					{alerta ? <p className="text-primario-red"> {alerta.msg} </p> : null}
 					<InputRdVerde
 						handleChange={onChangeLogin}
@@ -102,7 +124,10 @@ const NuevaCuenta = (props) => {
 							type: "text",
 							placeholder: "nombre de usuario",
 							titulo: "nombres de usuario",
+							min: 4,
+							max: 40,
 						}}
+						style={""}
 					/>
 					<InputRdVerde
 						handleChange={onChangeLogin}
@@ -113,7 +138,10 @@ const NuevaCuenta = (props) => {
 							type: "email",
 							placeholder: "correo electronico",
 							titulo: "correo electronico",
+							min: 4,
+							max: 40,
 						}}
+						style={""}
 					/>
 
 					<InputRdVerde
@@ -125,7 +153,9 @@ const NuevaCuenta = (props) => {
 							type: "password",
 							placeholder: "contraseña",
 							titulo: "contraseña",
+							max: 30,
 						}}
+						style={""}
 					/>
 
 					<InputRdVerde
@@ -137,12 +167,39 @@ const NuevaCuenta = (props) => {
 							type: "password",
 							placeholder: "confirmar contraseña ",
 							titulo: "confirmar contraseña",
+							max: 30,
 						}}
+						style={""}
 					/>
 
 					<BotonAzul texto={"Registrarse"} type={"submit"} />
 				</form>
 			</div>
+{	elemento &&		<Modal style={"bg-white"} position={"z-50"}>
+				<div className="border border-primario-blue rounded-lg p-16 shadow-md flex justify-center items-center flex-col">
+					<p className='text-primario-blue text-lg'>
+						se le ha enviado un codigo de verificacion de cuenta al correo{" "}
+						{email}
+					</p>
+					<InputRdVerde
+						handleChange={onChangeLogin}
+						atributos={{
+							id: "codigo",
+							name: "codigo",
+							type: "codigo",
+							placeholder: "digite el codigo aqui ",
+							max:6
+						}}
+						style={"text-center border-2 text-2xl"}
+					/>
+					<button
+						className=" bottom-32  shadow-lg rounded-xl p-4 text-primario-green-pure font-bold hover:bg-green-400 hover:border-primario-green bg-primario-green "
+					>
+						REENVIAR
+					</button>
+					<p className='mt-5 text-gray-500 hover:text-primario-red cursor-pointer'>cambiar de correo</p>
+				</div>
+			</Modal>}
 		</div>
 	);
 };

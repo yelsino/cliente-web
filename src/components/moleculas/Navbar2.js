@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "../atomos/Logo";
 const Navbar2 = (props) => {
 	return (
-		<div className="flex justify-between shadow-md py-4 px-24 fixed top w-full top-0 bg-white z-40">
+		<div className="flex justify-between shadow-md py-4 px-24 fixed  w-full top-0 bg-white z-50">
 			<div className="  absolute top-1 left-10 ">
 				<Logo style={"w-16"} />
 			</div>
