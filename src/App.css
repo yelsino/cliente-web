@@ -45,7 +45,7 @@ input:-internal-autofill-selected {
 
 .input_text:focus ~ .label_texto {
 	top: -1rem;
-	font-size: 0.8rem;
+	font-size: 1rem;
 	left: 0.8rem;
 	background: #ffffff;
 	display: block;
@@ -109,4 +109,27 @@ select:-webkit-autofill:focus {
 	100% {
 		transform: scale(1) rotateZ(360deg);
 	}
+}
+
+
+.fp-controlArrow.fp-next {
+    right: 15px;
+    border-width: 38.5px 0 38.5px 34px;
+    border-color: transparent transparent transparent #B7FFC2 !important;
+}
+.fp-controlArrow.fp-prev {
+    left: 15px;
+    width: 0;
+    border-width: 38.5px 34px 38.5px 0;
+    border-color: transparent #B7FFC2  transparent transparent !important;
+}
+
+
+.centrarAbosolute {
+ width: 230px;
+  height: 120px;
+  /* centrar vertical y horizontalmente */
+  position: fixed;
+  left: 50%;
+  margin: -25px 0 0 -115px;
 }

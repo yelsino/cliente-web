@@ -17,9 +17,12 @@ import listaReducer from "./listaReducer";
 
 const ListaState = (props) => {
 	const json_lista_actual = localStorage.getItem("lista_actual");
-	const json_total_lista = localStorage.getItem("total_lista");
 	const lista_actual = JSON.parse(json_lista_actual);
+
+	const json_total_lista = localStorage.getItem("total_lista");
 	const total_lista = Number(JSON.parse(json_total_lista));
+	
+	// d estados
 	const initialState = {
 		listas: [],
 		listaseleccionada: !lista_actual ? null : lista_actual,
@@ -162,7 +165,6 @@ const ListaState = (props) => {
 
 	// d guardar cambios en lista
 	const guardarCambiosEnLista = async (lista_actual) => {
-		console.log("esto aqui en guardar lista");
 		if (lista_actual === null) {
 			return console.log("no hay lista");
 		} else {

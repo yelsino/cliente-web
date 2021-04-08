@@ -91,16 +91,30 @@ const ItemProductoLista = ({ producto, mostrarElemento, elemento_actual }) => {
 
 	return (
 		<div className="flex items-center flex-col w-full">
-			<div className="flex items-center  w-full">
+			<div className="flex items-center  w-full ">
 				<div
 					onClick={() => {
 						obtenerProductoSeleccionado(_id);
 						mostrarElemento(stock, medida_minoreo);
 					}}
-					className={`mb-1 bg-white shadow-lg rounded-lg py-4 ml-6 mr-2  p-4  w-full relative  hover:bg-green-50 ${
-						cantidad_producto > stock ? "border-primario-red border-2" : ""
-					}`}
+					className={`mb-1 bg-white shadow-lg rounded-lg py-4 ml-6 mr-2  p-4  w-full relative group  ${
+						stock < cantidad_producto
+							? "hover:bg-primario-red-transparente"
+							: "hover:bg-green-50"
+					} ${cantidad_producto > stock ? "border-primario-red border-2" : ""}`}
 				>
+					{cantidad_producto > stock && stock !== 0 && (
+						<p className=" text-gray-500 text-center mb-1">
+							quedan <span className="text-primario-red">{stock}</span>{" "}
+							{medida_minoreo} de este producto
+						</p>
+					)}
+					{stock === 0 && (
+						<p className="mb-1 text-center text-gray-500">
+							este producto se ha
+							<span className="text-primario-red font-semibold "> agotado</span>
+						</p>
+					)}
 					<div className="flex justify-between">
 						<p className="w-36 ">
 							{" "}
@@ -112,38 +126,81 @@ const ItemProductoLista = ({ producto, mostrarElemento, elemento_actual }) => {
 						{/*  */}
 						{/* BOTONES ADD Y RES */}
 						{/*  */}
-						<p className="w-24 ">
-							<button
-								disabled={btn}
-								onClick={(e) => {
-									e.stopPropagation();
-									restarCantidad();
-									mostrarElemento(stock, medida_minoreo);
-								}}
-								className="inline-block mr-4 cursor-pointer"
-							>
-								{" "}
-								<span className="bg-primario-green text-primario-green-semi font-bold py-0 px-3 rounded-lg ">
-									<span className="bg-primario-green-semi w-3 h-1.5 rounded-sm inline-block mb-1 "></span>
-								</span>{" "}
-							</button>
-							{/*  */}
-							<button
-								disabled={btn}
-								onClick={() => {
-									if (cantidad_producto < stock) {
-										setCantidadProducto(cantidad_producto + 1);
-									} else {
-										return;
-									}
-									aumentarCantidad();
-									mostrarElemento(stock, medida_minoreo);
-								}}
-								className="bg-primario-green text-primario-green-semi font-bold py-1 px-2 rounded-lg inline-block cursor-pointer"
-							>
-								<IconPlus />
-							</button>
-						</p>
+						{cantidad_producto <= stock ? (
+							<div className="w-24 ">
+								<button
+									disabled={btn}
+									onClick={(e) => {
+										e.stopPropagation();
+										restarCantidad();
+										mostrarElemento(stock, medida_minoreo);
+									}}
+									className="inline-block mr-4 cursor-pointer"
+								>
+									{" "}
+									<span className="bg-primario-green text-primario-green-semi font-bold py-0 px-3 rounded-lg ">
+										<span className="bg-primario-green-semi w-3 h-1.5 rounded-sm inline-block mb-1 "></span>
+									</span>{" "}
+								</button>
+								{/*  */}
+								<button
+									disabled={btn}
+									onClick={() => {
+										if (cantidad_producto < stock) {
+											setCantidadProducto(cantidad_producto + 1);
+										} else {
+											return;
+										}
+										aumentarCantidad();
+										mostrarElemento(stock, medida_minoreo);
+									}}
+									className="bg-primario-green text-primario-green-semi font-bold py-1 px-2 rounded-lg inline-block cursor-pointer"
+								>
+									<IconPlus />
+								</button>
+							</div>
+						) : stock > 1 ? (
+							<div className="w-24 ">
+								<button
+									disabled={btn}
+									onClick={() => {
+										setCantidadProducto(
+											cantidad_producto + stock - cantidad_producto
+										);
+									}}
+									className="bg-primario-green text-primario-green-semi font-bold py-1 px-2 rounded-lg inline-block cursor-pointer"
+								>
+									Actualizar
+								</button>
+							</div>
+						) : (
+							<div className="w-24 ">
+								<button
+									disabled={btn}
+									onClick={quitarProducto}
+									className="bg-primario-red-transparente text-primario-red font-bold py-1 px-2 rounded-lg inline-block cursor-pointer group-hover:border-primario-red border border-white"
+								>
+									Eliminar
+								</button>
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+								{/*  */}
+							</div>
+						)}
 						{/*  */}
 						{/* PRECIOS */}
 						{/*  */}

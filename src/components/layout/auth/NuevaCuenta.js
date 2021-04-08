@@ -20,11 +20,14 @@ const NuevaCuenta = (props) => {
 		mensaje,
 		autenticado,
 		registrarUsuario,
+		codigoverificacion,
 		generarCodigoDeVerificacion,
+		validarCodigoDeVerificacion,
+		eliminarCodigoDeVerificacion,
 	} = authContext;
 
-	const elementoContext = useContext(ElementoContext)
-	const { elemento,crearElemento } = elementoContext;
+	const elementoContext = useContext(ElementoContext);
+	const { elemento, crearElemento } = elementoContext;
 
 	// en caso de que el usuario se haya autenticado o registrador o sea un registro duplicado
 
@@ -37,7 +40,6 @@ const NuevaCuenta = (props) => {
 		if (mensaje) {
 			mostrarAlerta("error de registro", "estilo bonito de error");
 		}
-		console.log("efect nueva cuenta");
 	}, [mensaje, autenticado, props.history]);
 
 	const [usuario, guardarUsuario] = useState({
@@ -46,7 +48,10 @@ const NuevaCuenta = (props) => {
 		password: "",
 		confirmar: "",
 	});
-
+	const [codigo, setCodigo] = useState("");
+	const onChangeCodigo = (e) => {
+		setCodigo(e.target.value);
+	};
 	// extraer usuario
 	const { username, email, password, confirmar } = usuario;
 
@@ -59,14 +64,14 @@ const NuevaCuenta = (props) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		
-		for(let i=0; i<username.length; i++){
-			var numeros="0123456789";
-      if (numeros.indexOf(username.charAt(i),0)!=-1){
+
+		for (let i = 0; i < username.length; i++) {
+			var numeros = "0123456789";
+			if (numeros.indexOf(username.charAt(i), 0) != -1) {
 				mostrarAlerta("el nombre no debe contener numeros");
-         return 
-      }
-   }
+				return;
+			}
+		}
 
 		if (
 			username.trim() === "" ||
@@ -93,15 +98,10 @@ const NuevaCuenta = (props) => {
 			return;
 		}
 
-		crearElemento()
+		crearElemento();
 		generarCodigoDeVerificacion({ email });
-		// registrarUsuario({
-		// 	username,
-		// 	email,
-		// 	password,
-		// });
 
-		console.log("registro exitoso");
+		// console.log("registro exitoso");
 	};
 
 	return (
@@ -175,31 +175,110 @@ const NuevaCuenta = (props) => {
 					<BotonAzul texto={"Registrarse"} type={"submit"} />
 				</form>
 			</div>
-{	elemento &&		<Modal style={"bg-white"} position={"z-50"}>
-				<div className="border border-primario-blue rounded-lg p-16 shadow-md flex justify-center items-center flex-col">
-					<p className='text-primario-blue text-lg'>
-						se le ha enviado un codigo de verificacion de cuenta al correo{" "}
-						{email}
-					</p>
-					<InputRdVerde
-						handleChange={onChangeLogin}
-						atributos={{
-							id: "codigo",
-							name: "codigo",
-							type: "codigo",
-							placeholder: "digite el codigo aqui ",
-							max:6
-						}}
-						style={"text-center border-2 text-2xl"}
-					/>
-					<button
-						className=" bottom-32  shadow-lg rounded-xl p-4 text-primario-green-pure font-bold hover:bg-green-400 hover:border-primario-green bg-primario-green "
-					>
-						REENVIAR
-					</button>
-					<p className='mt-5 text-gray-500 hover:text-primario-red cursor-pointer'>cambiar de correo</p>
-				</div>
-			</Modal>}
+			{elemento && (
+				<Modal style={"bg-gray-700 opacity-75"} position={"z-50"}>
+					<div className="border border-primario-blue rounded-lg p-16 shadow-md flex justify-center items-center flex-col bg-white">
+						{mensaje && <p className="text-primario-red">{mensaje}</p>}
+						{alerta && <p className="text-primario-red">{alerta.msg}</p>}
+						{!codigoverificacion ? (
+							<p className="text-primario-blue text-lg">
+								se le ha enviado un codigo de verificacion <br /> de cuenta al
+								correo {email}
+							</p>
+						) : (
+							<p className="text-primario-blue text-lg mb-5">
+								{/* {email}  */}
+								<br />
+								Su correo ha sido validado
+							</p>
+						)}
+						<div className="flex justify-center items-center">
+					{	!codigoverificacion &&	<InputRdVerde
+								handleChange={onChangeCodigo}
+								atributos={{
+									id: "codigo",
+									name: "codigo",
+									type: "codigo",
+									value: codigo,
+									placeholder: "digite el codigo aqui ",
+									max: 4,
+									readOnly: !codigoverificacion ? false : true,
+								}}
+								style={"text-center border-2 text-2xl"}
+							/>}
+							{!codigoverificacion && (
+								<button
+									onClick={() => {
+										if (codigo.length !== 4) {
+											mostrarAlerta("el campo del debe tener 4 letras");
+											return;
+										}
+										mostrarAlerta("validando...");
+										validarCodigoDeVerificacion(codigo);
+										
+									}}
+									className=" bottom-32  shadow-lg rounded-xl h-10 px-5 text-primario-green-pure font-bold hover:bg-green-400 hover:border-primario-green bg-primario-green ml-5 "
+								>
+									VALIDAR
+								</button>
+							)}
+
+							{codigoverificacion && (
+								<button
+									onClick={() => {
+										registrarUsuario({
+											username,
+											email,
+											password,
+										});
+
+										if (codigoverificacion) {
+											eliminarCodigoDeVerificacion(codigoverificacion._id);
+										}
+										setTimeout(() => {
+											crearElemento();
+										}, 1000);
+									}}
+									className=" bottom-32  shadow-md rounded-xl h-16 px-5 text-primario-green-pure font-bold hover:bg-green-400 hover:border-primario-green bg-primario-green ml-5 "
+								>
+									REGISTRARSE
+								</button>
+							)}
+						</div>
+						<div className="flex justify-evenly w-full">
+							<p
+								onClick={() => {
+									guardarUsuario({
+										...usuario,
+										email: "",
+									});
+									setCodigo("")
+									crearElemento();
+
+									if(codigoverificacion){
+										eliminarCodigoDeVerificacion(codigoverificacion._id);
+									}
+								}}
+								className="mt-5 text-gray-500 hover:text-primario-red cursor-pointer"
+							>
+								cambiar de correo
+							</p>
+							{!codigoverificacion && (
+								<p
+									onClick={() => {
+										generarCodigoDeVerificacion({ email });
+										mostrarAlerta("se ha reenviado un codigo");
+										setCodigo("")
+									}}
+									className="mt-5 text-gray-500 hover:text-primario-red cursor-pointer"
+								>
+									reenviar correo
+								</p>
+							)}
+						</div>
+					</div>
+				</Modal>
+			)}
 		</div>
 	);
 };

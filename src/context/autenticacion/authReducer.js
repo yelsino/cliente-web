@@ -6,6 +6,8 @@ import {
 	REGISTRO_EXITOSO,
 	REGISTRO_ERROR,
 	ACTUALZIAR_CUENTA,
+	CODIGO_VERFICACION,
+	MENSAJE_ALERTA,
 } from "../../types";
 
 export default (state, action) => {
@@ -22,6 +24,9 @@ export default (state, action) => {
 
 		case OBTENER_USUARIO:
 			localStorage.setItem("usuario", JSON.stringify(action.payload.usuario));
+			// localStorage.removeItem("direccion_actual");
+			// localStorage.removeItem("lista_actual");
+			// localStorage.removeItem("total_lista");
 			return {
 				...state,
 				autenticado: true,
@@ -47,6 +52,16 @@ export default (state, action) => {
 				autenticado: null,
 				mensaje: action.payload,
 			};
+		case CODIGO_VERFICACION:
+			return {
+				...state,
+				codigoverificacion:action.payload
+			};
+		case MENSAJE_ALERTA:
+			return {
+				...state,
+				mensaje:action.payload
+			}
 		default:
 			return state;
 	}

@@ -20,6 +20,7 @@ const InputRdVerde = ({ atributos, handleChange, style }) => {
 				placeholder={atributos.placeholder}
 				minLength={atributos.min}
 				maxLength={atributos.max}
+				readOnly={atributos.readOnly}
 			/>
 
 			<label

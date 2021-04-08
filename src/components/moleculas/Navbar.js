@@ -112,6 +112,10 @@ const Navbar = (props) => {
 						</div>
 					)}
 				</div>
+
+			{!token &&	<div className="relative px-5 py-1 flex justify-center">
+					<Link to={"/registro"}>Registrarse</Link>
+				</div>}
 			</ul>
 		</div>
 	);

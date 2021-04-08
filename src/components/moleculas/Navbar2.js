@@ -1,6 +1,12 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/autenticacion/authContext";
 import Logo from "../atomos/Logo";
 const Navbar2 = (props) => {
+
+	const authContext = useContext(AuthContext)
+	const { token } = authContext;
+
 	return (
 		<div className="flex justify-between shadow-md py-4 px-24 fixed  w-full top-0 bg-white z-50">
 			<div className="  absolute top-1 left-10 ">
@@ -20,18 +26,22 @@ const Navbar2 = (props) => {
 				>
 					Tienda
 				</Link>
-				<Link
-					to={"/login"}
-					className="px-5 py-1 focus-within:text-green-600 relative"
-				>
-					Iniciar
-				</Link>
-				<Link
-					to={"/registro"}
-					className="px-5 py-1 focus-within:text-green-600 relative"
-				>
-					Registrarse
-				</Link>
+				{!token && (
+					<Link
+						to={"/login"}
+						className="px-5 py-1 focus-within:text-green-600 relative"
+					>
+						Iniciar
+					</Link>
+				)}
+				{!token && (
+					<Link
+						to={"/registro"}
+						className="px-5 py-1 focus-within:text-green-600 relative"
+					>
+						Registrarse
+					</Link>
+				)}
 			</ul>
 		</div>
 	);

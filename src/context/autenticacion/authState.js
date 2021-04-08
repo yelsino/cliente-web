@@ -9,6 +9,8 @@ import {
 	REGISTRO_ERROR,
 	CERRAR_SESION,
 	ACTUALZIAR_CUENTA,
+	CODIGO_VERFICACION,
+	MENSAJE_ALERTA
 } from "../../types";
 import AuthContext from "./authContext";
 import AuthReducer from "../../context/autenticacion/authReducer";
@@ -19,6 +21,7 @@ const AuthState = (props) => {
 		autenticado: null,
 		usuario: null,
 		mensaje: null,
+		codigoverificacion: null,
 	};
 
 	const [state, dispatch] = useReducer(AuthReducer, initialState);
@@ -32,6 +35,7 @@ const AuthState = (props) => {
 				type: REGISTRO_EXITOSO,
 				payload: respuesta.data,
 			});
+
 
 			// obtener usuario autenticado
 			usuarioAutenticado();
@@ -57,6 +61,7 @@ const AuthState = (props) => {
 				type: OBTENER_USUARIO,
 				payload: respuesta.data,
 			});
+
 		} catch (error) {
 			dispatch({
 				type: LOGIN_ERROR,
@@ -68,7 +73,6 @@ const AuthState = (props) => {
 	const iniciarSesion = async (datos) => {
 		try {
 			const respuesta = await clienteAxios.post("api/auth/signin", datos);
-			console.log("daaaaa");
 			dispatch({
 				type: LOGIN_EXITOSO,
 				payload: respuesta.data,
@@ -84,6 +88,13 @@ const AuthState = (props) => {
 				type: LOGIN_ERROR,
 				payload: alerta,
 			});
+
+			setTimeout(() => {
+					dispatch({
+						type: LOGIN_ERROR,
+						payload: null,
+					});
+			}, 3000);
 		}
 	};
 
@@ -113,8 +124,9 @@ const AuthState = (props) => {
 			console.log(resultado);
 			if (resultado.status === 200) {
 				localStorage.clear();
-				window.location.replace("http://localhost:3000/");
-				// window.location.replace("https://negocios-carlos.000webhostapp.com/");
+				// window.location.replace(`${process.env.URL_PRODUCCION}`);
+				// window.location.replace("http://localhost:3000/");
+				window.location.replace("https://negocios-carlos.000webhostapp.com/");
 				console.log("cuenta eliminada");
 			} else {
 				return;
@@ -133,6 +145,53 @@ const AuthState = (props) => {
 		}
 	}
 
+	const validarCodigoDeVerificacion = async (codigo) => {
+		try {
+			const resultado = await clienteAxios.get(`api/codigos/${codigo.toUpperCase()}`);
+			console.log(resultado)
+			if(resultado.status === 204){
+					dispatch({
+						type: MENSAJE_ALERTA,
+						payload: "codigo de verificacion no valido, verifique si es un codigo valido en su bandeja"
+					});
+
+					setTimeout(() => {
+						dispatch({
+							type: MENSAJE_ALERTA,
+							payload:null,
+						});
+					}, 4000);
+					return
+			}
+			if(resultado.status === 200) {
+				dispatch({
+					type: CODIGO_VERFICACION,
+					payload: resultado.data[0]
+				});
+			
+			}
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const eliminarCodigoDeVerificacion = async (codigo) => {
+
+		console.log('eliminar codigo')
+		console.log(codigo);
+		console.log('eliminar codigo')
+		try {
+			await clienteAxios.delete(`api/codigos/${codigo}`);
+			dispatch({
+				type: CODIGO_VERFICACION,
+				payload: null,
+			});
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -140,6 +199,7 @@ const AuthState = (props) => {
 				autenticado: state.autenticado,
 				usuario: state.usuario,
 				mensaje: state.mensaje,
+				codigoverificacion: state.codigoverificacion,
 				registrarUsuario,
 				iniciarSesion,
 				usuarioAutenticado,
@@ -147,6 +207,8 @@ const AuthState = (props) => {
 				actualizarCuentaDeUsuario,
 				eliminarCuentadeUsuario,
 				generarCodigoDeVerificacion,
+				validarCodigoDeVerificacion,
+				eliminarCodigoDeVerificacion,
 			}}
 		>
 			{" "}

@@ -91,22 +91,58 @@ const Pedido = () => {
 		obtenerListas();
 	}, []);
 	return (
-		<div className="flex items-center flex-col justify-center h-screen mb-10">
-			<h3 className="text-5xl  text-center my-10 text-primario-blue">
-				RESUMEN DE PEDIDO
-			</h3>
+		<div className="flex items-center flex-col justify-center  mb-10">
+			<h3 className="text-3xl   my-10 text-primario-blue">RESUMEN DE PEDIDO</h3>
 			{alerta ? (
 				<p className="text-primario-red text-xl">{alerta.msg}</p>
 			) : null}
+
 			<div className=" md:flex lg:flex  justify-center   mx-auto">
 				<div className="text-lg my-10 mx-10 lg: mr-10  flex flex-col justify-center items-center">
 					{/*  */}
 					{/*  */}
 					{/*  */}
-					<div className=" w-96">
-						<SubTitulo texto={"CLIENTE"} />
-						<div className="mb-4">
-							<p className="my-4">
+					<div className="flex justify-center ">
+						<div>
+							<SubTitulo texto={"SUS PRODUCTOS"}  style={'text-center'}/>
+							{/* <p className="text-primario-blue font-bold my-2 mt-4">
+								seleccione su lista a pedir
+							</p> */}
+
+							<div className="relative mb-4  flex flex-wrap mt-5 justify-center ">
+								{listaseleccionada.productos.map((producto) => {
+									return (
+										<div className="p-4 bg-white shadow-md rounded-md flex m-1 border-t-4 border-primario-green justify-center items-center w-52 ">
+											<div className="mr-2">
+												<img src={producto.imgURL} className="w-10" />
+											</div>
+											<div>
+												<p className="font-bold ">{producto.nombre} </p>
+												<p className="text-gray-600">
+													{" "}
+													{
+														listaseleccionada.cantidad_producto.find(
+															(e) => e.id === producto._id
+														).cantidad_producto
+													}{" "}
+													{producto.medida_minoreo}
+												</p>
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+					</div>
+
+					{/*  */}
+					{/*  */}
+					{/*  */}
+
+					<div className="  w-full flex flex-col justify-center">
+						<SubTitulo texto={"SUS DATOS"} style={'text-center'} />
+						<div className="mb-4 grid grid-cols-2 gap-4 lg:grid-cols-3 w-full xl:grid-cols-4 items-center">
+							<p className="my-4 flex flex-col">
 								<span className="font-bold tracking-wide text-gray-600">
 									nombre:{" "}
 								</span>
@@ -114,69 +150,33 @@ const Pedido = () => {
 									{username}
 								</span>
 							</p>
-							<p className="my-4">
+							<p className="my-4 flex flex-col">
 								<span className="font-bold text-gray-600">dni: </span>
 								<span className="text-gray-700 lett tracking-widest">
 									{dni}
 								</span>
 							</p>
-							<p className="my-4">
+							<p className="my-4 flex flex-col">
 								<span className="font-bold text-gray-600">celular: </span>
 								<span className="text-gray-700 tracking-widest">{celular}</span>
 							</p>
-							<p className="my-4">
+							<p className="my-4 flex flex-col">
 								<span className="font-bold text-gray-600">email: </span>
 								<span className="text-gray-700 tracking-widest">{email}</span>
 							</p>
 
-							<p className="my-4">
+							<p className="my-4 flex flex-col">
 								<span className="font-bold text-gray-600">direccion: </span>
 								<span className="text-gray-700 tracking-widest">
 									{direccionLS.nombre}
 								</span>
 							</p>
-							<p className="my-4">
+							<p className="my-4 flex flex-col">
 								<span className="font-bold text-gray-600">refencia: </span>
 								<span className="text-gray-700 tracking-widest">
 									{direccionLS.referencia}
 								</span>
 							</p>
-						</div>
-					</div>
-
-					{/*  */}
-					{/*  */}
-					{/*  */}
-					<div className="flex justify-center ">
-						<div>
-							<SubTitulo texto={"PEDIDO"} />
-							<p className="text-primario-blue font-bold my-2 mt-4">
-								seleccione su lista a pedir
-							</p>
-
-							<div className="relative mb-4 ">
-								<div onChange={onChangeListas}>
-									{listas.map((e) => {
-										if (e.productos.length > 0) {
-											return (
-												<div
-													onClick={() => {
-														listaActual(e._id);
-													}}
-													key={e._id}
-													className={`p-4 bg-primario-blue-claro text-primario-blue font-semibold focus:outline-none w-96 flex justify-center px-4 tracking-wide mb-2 cursor-pointer rounded-lg ${
-														e._id === listaseleccionada._id
-															? " border-primario-blue border-4"
-															: ""
-													}`}
-												>
-													{e.nombre}
-												</div>
-											);
-										}
-									})}
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -217,7 +217,11 @@ const Pedido = () => {
 						</div>
 						<p
 							onClick={() => {
-								window.location.replace("http://localhost:3000/tienda");
+								// window.location.replace(`${process.env.URL_PRODUCCION}/tienda`);
+								// window.location.replace("http://localhost:3000/tienda");
+								window.location.replace(
+									"https://negocios-carlos.000webhostapp.com/tienda"
+								);
 							}}
 							className="text-primario-red text-center cursor-pointer"
 						>
@@ -257,9 +261,13 @@ const Pedido = () => {
 								<button
 									onClick={() => {
 										borrarEstadosPedido();
-										window.location.replace("http://localhost:3000/tienda");
+										// window.location.replace("http://localhost:3000/tienda");
+										window.location.replace(
+											"https://negocios-carlos.000webhostapp.com/tienda"
+										);
+										// window.location.replace(`${process.env.URL_PRODUCCION}/tienda`);
 									}}
-									className="bg-black px-14 py-2 text-2xl text-white rounded-3xl "
+									className="bg-primario-green shadow-lg px-20 py-5 text-4xl text-primario-green-pure font-bold rounded-3xl hover:bg-green-200 "
 								>
 									Ok
 								</button>

@@ -89,6 +89,19 @@ const PedidoState = (props) => {
 		});
 	};
 	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos trabajar aqui confirmar que haya cantidad de productos en lista
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
+	// d restarStock de productos
 	const restarStockProductos = async (lista_actual) => {
 		const copy_lista_actual = lista_actual.cantidad_producto;
 		const copy_productos = lista_actual.productos;

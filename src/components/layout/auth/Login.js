@@ -6,6 +6,7 @@ import Logo from "../../atomos/Logo";
 import InputRdVerde from "../../atomos/inputs/InputRdVerde";
 import TextoRojo from "../../atomos/textos/TextoRojo";
 import Navbar2 from "../../moleculas/Navbar2";
+import SubTitulo from "../../atomos/textos/SubTitulo";
 
 const Login = (props) => {
 	// extraer valores del context
@@ -40,7 +41,10 @@ const Login = (props) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		console.log("onsubmit");
+		if(email === '' || password === ''){
+			mostrarAlerta('los campos no pueden estar vacios')
+			return
+		}
 
 		iniciarSesion({ email, password });
 	};
@@ -49,10 +53,14 @@ const Login = (props) => {
 		<div className="bg-primario-green p-8 h-screen  flex justify-center flex-col items-center">
 			<Navbar2 />
 
-			<div className="flex justify-center items-center flex-col bg-white w-96 px-6 py-4 rounded-lg shadow-xl">
-				<div className="contenedor-form sombra-dark"></div>
-
+			<div className="flex justify-center items-center flex-col bg-white w-96 px-6 py-4 rounded-lg shadow-xl mt-10">
+				<div className="contenedor-form sombra-dark  "></div>
+				<SubTitulo
+					texto={"Iniciar Sesion"}
+					style={"text-primario-green-semi"}
+				/>
 				<Logo />
+				{mensaje ? <p className="text-primario-red">{mensaje}</p> : null}
 				{alerta ? <p className="text-primario-red">{alerta.msg}</p> : null}
 				<InputRdVerde
 					handleChange={onchangeInicio}
@@ -64,6 +72,7 @@ const Login = (props) => {
 						placeholder: "correo electronico",
 						titulo: "correo electronico",
 					}}
+					style={""}
 				/>
 				<InputRdVerde
 					handleChange={onchangeInicio}
@@ -75,6 +84,7 @@ const Login = (props) => {
 						placeholder: "contraseña",
 						titulo: "contraseña",
 					}}
+					style={""}
 				/>
 
 				<Link to={"/"} className="text-primario-red my-4">

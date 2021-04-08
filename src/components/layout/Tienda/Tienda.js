@@ -21,9 +21,11 @@ import CardProduct from "../../moleculas/Cards/CardProducto";
 const Tienda = () => {
 	useEffect(() => {
 		usuarioAutenticado();
-		obtenerProductos();
-		obtenerListas();
-		obtenerDirecciones();
+		setTimeout(() => {
+			obtenerProductos();
+			obtenerListas();
+			obtenerDirecciones();
+		}, 300);
 	}, []);
 	//d CONTEXTOS
 	const authContext = useContext(AuthContexto);
@@ -33,7 +35,14 @@ const Tienda = () => {
 		actualizarCuentaDeUsuario,
 	} = authContext;
 	const alertasContext = useContext(alertaContext);
-	const { alerta, card, abrirCard, mostrarAlerta } = alertasContext;
+	const {
+		alerta,
+		alerta2,
+		card,
+		abrirCard,
+		mostrarAlerta,
+		mostrarAlerta2,
+	} = alertasContext;
 	const elementosContext = useContext(ElementoContext);
 	const {
 		elemento_actual,
@@ -142,7 +151,7 @@ const Tienda = () => {
 				nombre: e.target.value.substring(0, e.target.value.length - 1),
 			});
 		}
-		if (e.target.name === "referencia" && e.target.value.length > 100) {
+		if (e.target.name === "referencia" && e.target.value.length > 70) {
 			setDireccion({
 				...usuario,
 				referencia: e.target.value.substring(0, e.target.value.length - 1),
@@ -151,37 +160,52 @@ const Tienda = () => {
 	};
 
 	const generarPedido = (e) => {
-		obtenerDirecciones();
-		setCliente({
-			username: usuario.username,
-			email: usuario.email,
-			celular: !usuario.celular ? "" : usuario.celular,
-			dni: !usuario.dni ? "" : usuario.dni,
-		});
+		const verificar_cantidades = listaseleccionada.cantidad_producto;
+		const verificar_productos = listaseleccionada.productos;
 
-		setDireccion({
-			...datosdireccion,
-			creador: usuario._id,
-		});
-		setModal(true);
+		let contador = 0;
+		for (const producto of verificar_productos) {
+			if (
+				producto.stock >
+				verificar_cantidades.find((e) => e.id === producto._id)
+					.cantidad_producto
+			)
+				contador++;
+		}
+		if (contador === verificar_productos.length) {
+				obtenerDirecciones();
+				setCliente({
+					username: usuario.username,
+					email: usuario.email,
+					celular: !usuario.celular ? "" : usuario.celular,
+					dni: !usuario.dni ? "" : usuario.dni,
+				});
+
+				setDireccion({
+					...datosdireccion,
+					creador: usuario._id,
+				});
+				setModal(true);
+		}else {
+			console.log(contador)
+			console.log(verificar_productos.length);
+			mostrarAlerta2(
+				`no hay productos`
+			);
+		}
+
+	
 	};
 	const crearNuevaDireccion = () => {
-		if (
-			username === "" ||
-			email === "" ||
-			celular === "" ||
-			dni === "" ||
-			nombre_direccion === "" ||
-			referencia === ""
-		) {
-			mostrarAlerta("todos los campos son obligarorios");
+		if (nombre_direccion.length < 5 || referencia.length < 5) {
+			mostrarAlerta(
+				"los datos de la direccion deben contener almenos 5 caracteres"
+			);
 			return;
 		}
-		actualizarCuentaDeUsuario(usuario._id, datoscliente);
+		// actualizarCuentaDeUsuario(usuario._id, datoscliente);
 		crearDireccionNueva(datosdireccion);
-		setTimeout(() => {
-			history.push("/pedido");
-		}, 500);
+		showInputs(false);
 	};
 
 	const botonSiguiente = (e) => {
@@ -202,8 +226,13 @@ const Tienda = () => {
 		history.push("/pedido");
 	};
 	return (
-		<div className="mt-28">
+		<div className="mt-24 relative">
 			<Navbar listas={listas} />
+			{alerta2 && (
+				<p className=" centrarAbosolute z-20   h-20 w-20 text-center bg-white p-4 border-4 border-primario-red text-primario-red rounded-lg shadow-lg top-32">
+					hay productos agotados <span className='text-gray-500'>en tu lista, actualizalos o eliminalos</span>
+				</p>
+			)}
 			{token_user ? (
 				<div className="flex justify-center">
 					{/*  */}
@@ -227,6 +256,7 @@ const Tienda = () => {
 								filtro4={() => {}}
 								filtro5={() => {}}
 							/>
+							{/* fintra los productos */}
 							<div
 								id="vista_productos"
 								className="flex flex-wrap justify-center mt-4 "
@@ -242,6 +272,7 @@ const Tienda = () => {
 										return <CardAgregar key={e._id} producto={e} />;
 								})}
 							</div>
+							{/* pinta todos los productos en pantalla */}
 							<div
 								id="vista_productos"
 								className="flex flex-wrap justify-center mt-4 "
@@ -274,14 +305,13 @@ const Tienda = () => {
 												mostrarAlerta("crea una lista de pedido para iniciar");
 												return;
 											}
+											guardarCambiosEnLista(listaseleccionada);
+											listaActual(listaseleccionada._id);
 											if (listaseleccionada.productos.length === 0) {
-												mostrarAlerta("crea una lista de pedido para iniciar");
+												mostrarAlerta("añada productos");
 												return;
 											}
-
-											guardarCambiosEnLista(listaseleccionada);
 											generarPedido();
-											// history.push("/pedido");
 										}}
 										texto={"Pedir Envio"}
 										style={
@@ -398,7 +428,12 @@ const Tienda = () => {
 							>
 								Crea una{" "}
 								<span className="text-primario-red cursor-pointer">
-									<span className={`${alerta ? "text-primario-blue" : ""}`}>
+									<span
+										onClick={() => {
+											crearElemento();
+										}}
+										className={`${alerta ? "text-primario-blue" : ""}`}
+									>
 										nueva lista
 									</span>
 								</span>{" "}
@@ -418,7 +453,17 @@ const Tienda = () => {
 					</div>
 				</div>
 			) : (
-				<div className="">
+				// D CATALOGO
+				// D CATALOGO
+				// D CATALOGO
+				// D CATALOGO
+				// D CATALOGO
+				// D CATALOGO
+				<div className="mb-5">
+					<SubTitulo texto={"Nuestros productos"} style={"text-center"} />
+					<p className="text-center text-gray-500 mb-5">
+						Registrese para realizar un pedido
+					</p>
 					<Filtro
 						texto1={"Vegetales"}
 						texto2={"Frutas"}
@@ -454,14 +499,16 @@ const Tienda = () => {
 						{alerta && (
 							<p className="py-4 text-lg text-primario-red"> {alerta.msg}</p>
 						)}
-						<SubTitulo texto={"Datos de Envio"} />
+
 						<p>
-							Advertencia :{" "}
-							<span className="text-primario-red">
+							<span className="text-primario-red">Advertencia:</span>{" "}
+							<span>
 								los pedidos con lugar de envio fuera de satipo, no seran
 								procesados
 							</span>
 						</p>
+						<SubTitulo texto={"Datos de Envio"} />
+
 						<div className="grid grid-cols-2 gap-5">
 							<div className="flex items-center">
 								<p className="mr-5 w-24 ">NOMBRES</p>
@@ -559,12 +606,18 @@ const Tienda = () => {
 										{direcciones.length > 0 && !newdireccion && (
 											<button
 												onClick={() => {
+													setDireccion({
+														...datosdireccion,
+														nombre: "",
+														referencia: "",
+													});
+
 													showInputs(true);
 													setNewDireecion(true);
 												}}
 												className="bg-primario-blue-claro rounded-lg px-2 hover:text-white hover:bg-primario-blue"
 											>
-												nuevo
+												nueva direccion
 											</button>
 										)}
 										{direcciones.length > 0 && newdireccion && (
@@ -618,17 +671,19 @@ const Tienda = () => {
 							) : (
 								<div className=" ">
 									{!inputs ? (
-										<BotonVerde
-											onBtn={() => {
+										<button
+											onClick={() => {
 												showInputs(true);
 											}}
-											texto={"Nueva direccion"}
-										/>
+											className="bg-primario-blue-claro rounded-lg p-4 hover:text-white hover:bg-primario-blue"
+										>
+											nueva direccion
+										</button>
 									) : (
-										<div className="absolute bottom-14 right-10">
+										<div className="absolute bottom-5 right-10">
 											<BotonVerde
 												onBtn={crearNuevaDireccion}
-												texto={"Siguiente"}
+												texto={"crear Direccion"}
 											/>
 										</div>
 									)}
