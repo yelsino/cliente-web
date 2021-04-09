@@ -8,6 +8,7 @@ import {
 	ACTUALZIAR_CUENTA,
 	CODIGO_VERFICACION,
 	MENSAJE_ALERTA,
+	BLOQUEAR,
 } from "../../types";
 
 export default (state, action) => {
@@ -62,6 +63,11 @@ export default (state, action) => {
 				...state,
 				mensaje:action.payload
 			}
+		case BLOQUEAR:
+			return {
+				...state,
+				bloqueologin:action.payload
+			};
 		default:
 			return state;
 	}

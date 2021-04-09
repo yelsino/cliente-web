@@ -89,6 +89,8 @@ const ItemProductoLista = ({ producto, mostrarElemento, elemento_actual }) => {
 		quitarProductoEnLista(_id);
 	};
 
+
+
 	return (
 		<div className="flex items-center flex-col w-full">
 			<div className="flex items-center  w-full ">

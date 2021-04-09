@@ -27,7 +27,8 @@ const PedidoState = (props) => {
 
 	// d crear pedidos
 	const generarNuevoPedido = async (data) => {
-		console.log(data);
+		console.log('generar pedido')
+		// console.log(data);
 
 		dispatch({
 			type: CONFIRMACION_PEDIDO,
@@ -51,7 +52,6 @@ const PedidoState = (props) => {
 						payload: resultado.data.codigo_pedido,
 					});
 				}, 2000);
-				console.log("dasdasdasasdasasdsa");
 			}
 		} catch (error) {
 			console.log();
@@ -94,14 +94,7 @@ const PedidoState = (props) => {
 	// d restarStock de productos
 	// d restarStock de productos
 	// d restarStock de productos
-	// d restarStock de productos trabajar aqui confirmar que haya cantidad de productos en lista
-	// d restarStock de productos
-	// d restarStock de productos
-	// d restarStock de productos
-	// d restarStock de productos
-	// d restarStock de productos
-	// d restarStock de productos
-	// d restarStock de productos
+
 	const restarStockProductos = async (lista_actual) => {
 		const copy_lista_actual = lista_actual.cantidad_producto;
 		const copy_productos = lista_actual.productos;
@@ -122,6 +115,7 @@ const PedidoState = (props) => {
 				pedidos: state.pedidos,
 				confirmacion: state.confirmacion,
 				codigopedido: state.codigopedido,
+				pedidoseleccionado:state.pedidoseleccionado,
 				generarNuevoPedido,
 				borrarEstadosPedido,
 				obtenerPedidosUser,

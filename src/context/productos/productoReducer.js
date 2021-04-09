@@ -5,6 +5,7 @@ import {
 	OBTENER_PRODUCTOS_CLIENTE,
 	PRODUCTO_SELECCIONADO,
 	PRODUCTOS_LISTA,
+	BLOQUEAR,
 } from "../../types";
 
 export default (state, action) => {
@@ -27,6 +28,11 @@ export default (state, action) => {
 			return {
 				...state,
 				productoseleccionado: producto[0],
+			};
+		case BLOQUEAR:
+			return {
+				...state,
+				bloqueo:action.payload
 			};
 		default:
 			return state;

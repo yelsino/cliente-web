@@ -7,6 +7,7 @@ import {
 	PRODUCTOS_LISTA,
 	PRODUCTO_SELECCIONADO,
 	OBTENER_PRODUCTOS_CLIENTE,
+	BLOQUEAR,
 } from "../../types";
 
 import productoReducer from "./productoReducer";
@@ -17,6 +18,7 @@ const ProductoState = (props) => {
 		productos: [],
 		productoslista: [],
 		productoseleccionado: null,
+		bloqueo: false,
 	};
 
 	// d dispatch para ejecutar las acciones
@@ -24,9 +26,21 @@ const ProductoState = (props) => {
 
 	//  d obtener todos los productos
 	const obtenerProductos = async () => {
+		dispatch({
+			type: BLOQUEAR,
+			payload: true,
+		});
 		try {
 			const resultado = await clienteAxios.get("api/productos");
 			const filtrar = resultado.data.filter((e) => e.stock > 0);
+
+			if (resultado.status === 200) {
+				dispatch({
+					type: BLOQUEAR,
+					payload: false,
+				});
+			}
+
 			dispatch({
 				type: OBTENER_PRODUCTOS,
 				payload: filtrar,
@@ -72,6 +86,7 @@ const ProductoState = (props) => {
 	const obtenerProductosDeLista = async (listaId) => {
 		try {
 			const resultado = await clienteAxios.get(`api/listas/${listaId}`);
+
 			dispatch({
 				type: PRODUCTOS_LISTA,
 				payload: resultado.data.productos,
@@ -81,12 +96,16 @@ const ProductoState = (props) => {
 		}
 	};
 
+	// d blocquear aplicacion
+	const bloquearAplicacion = async () => {};
+
 	return (
 		<productoContext.Provider
 			value={{
 				productos: state.productos,
 				productoseleccionado: state.productoseleccionado,
 				productoslista: state.productoslista,
+				bloqueo: state.bloqueo,
 				obtenerProductos,
 				obtenerporCategoria,
 				obtenerProductoSeleccionado,

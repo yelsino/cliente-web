@@ -53,13 +53,10 @@ const Pedido = () => {
 	const direccionLS = JSON.parse(json_direccion);
 
 	// d ESTADOS
-	const [modal, openModal] = useState(false);
 
 	const history = useHistory();
 	// d FUNCIONES
-	const onChangeListas = (e) => {
-		listaActual(e.target.value);
-	};
+
 
 	const generarPedido = (e) => {
 		e.preventDefault();

@@ -14,6 +14,7 @@ import DireccionState from "./context/direcciones/direccionState";
 import Pedido from "./components/layout/Tienda/Pedido";
 import PedidoState from "./context/pedidos/pedidoState";
 import Home from "./components/layout/home/homepage";
+import ReclamoState from "./context/reclamos/reclamosState";
 
 // revisar si existe token
 const token = localStorage.getItem("token");
@@ -23,30 +24,32 @@ if (token) {
 
 function App() {
 	return (
-		<PedidoState>
-			<DireccionState>
-				<ElementState>
-					<AlertaState>
-						<ListaState>
-							<ProductoState>
-								<AuthState>
-									<Router>
-										<Switch>
-											<Route exact path="/login" component={Login} />
-											<Route exact path="/registro" component={NuevaCuenta} />
-											<Route path="/tienda" component={Tienda} />
-											<Route path="/admin" component={Admin} />
-											<Route path="/pedido" component={Pedido} />
-											<Route path="/" component={Home} />
-										</Switch>
-									</Router>
-								</AuthState>
-							</ProductoState>
-						</ListaState>
-					</AlertaState>
-				</ElementState>
-			</DireccionState>
-		</PedidoState>
+		<ReclamoState>
+			<PedidoState>
+				<DireccionState>
+					<ElementState>
+						<AlertaState>
+							<ListaState>
+								<ProductoState>
+									<AuthState>
+										<Router>
+											<Switch>
+												<Route exact path="/login" component={Login} />
+												<Route exact path="/registro" component={NuevaCuenta} />
+												<Route path="/tienda" component={Tienda} />
+												<Route path="/admin" component={Admin} />
+												<Route path="/pedido" component={Pedido} />
+												<Route path="/" component={Home} />
+											</Switch>
+										</Router>
+									</AuthState>
+								</ProductoState>
+							</ListaState>
+						</AlertaState>
+					</ElementState>
+				</DireccionState>
+			</PedidoState>
+		</ReclamoState>
 	);
 }
 

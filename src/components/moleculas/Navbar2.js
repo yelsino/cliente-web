@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/autenticacion/authContext";
 import Logo from "../atomos/Logo";
-const Navbar2 = (props) => {
+const Navbar2 = ({texto1,texto2,texto3,texto4}) => {
 
 	const authContext = useContext(AuthContext)
 	const { token } = authContext;
 
 	return (
-		<div className="flex justify-between shadow-md py-4 px-24 fixed  w-full top-0 bg-white z-50">
+		<div className="flex justify-between  py-4 px-24 fixed  w-full top-0 bg-white z-50">
 			<div className="  absolute top-1 left-10 ">
 				<Logo style={"w-16"} />
 			</div>
@@ -16,30 +16,30 @@ const Navbar2 = (props) => {
 			<ul className=" self-center text-gray-700 flex text-xl bg-white">
 				<Link
 					to={"/"}
-					className="px-5 py-1 focus-within:text-green-600 relative"
+					className="px-5 py-1 focus-within:text-green-600 relative hover:text-primario-blue"
 				>
-					Hogar
+					{texto1}
 				</Link>
 				<Link
 					to={"/tienda"}
-					className="px-5 py-1 focus-within:text-green-600 relative"
+					className="px-5 py-1 focus-within:text-green-600 relative hover:text-primario-blue"
 				>
-					Tienda
+					{texto2}
 				</Link>
-				{!token && (
+				{!token && texto3 && (
 					<Link
 						to={"/login"}
-						className="px-5 py-1 focus-within:text-green-600 relative"
+						className="px-5 py-1 focus-within:text-green-600 relative hover:text-primario-blue"
 					>
-						Iniciar
+						{texto3}
 					</Link>
 				)}
-				{!token && (
+				{!token && texto4 && (
 					<Link
 						to={"/registro"}
-						className="px-5 py-1 focus-within:text-green-600 relative"
+						className={`px-5 py-1 focus-within:text-green-600 relative hover:text-primario-blue`}
 					>
-						Registrarse
+						{texto4}
 					</Link>
 				)}
 			</ul>

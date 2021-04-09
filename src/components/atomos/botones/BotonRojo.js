@@ -1,6 +1,8 @@
 const BotonRojo = (props) => {
 	return (
-		<button className="bg-red-200 p-2 px-6 text-red-600 rounded-md font-bold hover:bg-red-600 hover:text-red-200">
+		<button 
+		onClick={props.onBtn}
+		className="bg-primario-red-transparente p-2 px-6 text-primario-red rounded-md font-bold hover:bg-primario-red hover:text-red-200">
 			{props.texto}
 		</button>
 	);

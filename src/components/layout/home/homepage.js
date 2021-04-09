@@ -32,7 +32,12 @@ const Home = () => {
 			render={({ state, fullpageApi }) => {
 				return (
 					<div id="fullpage-wrapper  ">
-						<Navbar2 />
+						<Navbar2
+							texto1={"Hogar"}
+							texto2={"Tienda"}
+							texto3={"Iniciar"}
+							texto4={"Registro"}
+						/>
 						<div className="section ">
 							{/*  */}
 							{/* section 1 */}
@@ -103,18 +108,6 @@ const Home = () => {
 									</span>
 								</div>
 
-								{/* <svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 1440 320"
-										className="absolute bottom-0 z-0"
-									>
-										<path
-											fill="#B7FFC2"
-											fill-opacity="1"
-											d="M0,288L60,277.3C120,267,240,245,360,245.3C480,245,600,267,720,256C840,245,960,203,1080,181.3C1200,160,1320,160,1380,160L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
-										></path>
-									</svg> */}
-
 								<svg
 									className="absolute z-0 -bottom-10"
 									xmlns="http://www.w3.org/2000/svg"
@@ -134,17 +127,16 @@ const Home = () => {
 							{/*  */}
 							<section className="slide relative  ">
 								<svg
+									className="absolute top-0 z-0"
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 1440 320"
-									className="absolute top-0 z-0"
 								>
 									<path
 										fill="#B7FFC2"
 										fill-opacity="1"
-										d="M0,0L48,26.7C96,53,192,107,288,128C384,149,480,139,576,149.3C672,160,768,192,864,202.7C960,213,1056,203,1152,218.7C1248,235,1344,277,1392,298.7L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+										d="M0,128L80,106.7C160,85,320,43,480,32C640,21,800,43,960,69.3C1120,96,1280,128,1360,144L1440,160L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
 									></path>
 								</svg>
-
 								<div className="flex justify-center flex-col items-center relative z-30 ">
 									<Logo style={"w-56"} />
 									<p className="text-primario-blue tracking-widest leading-loose  w-1/3 text-center text-lg">
@@ -246,9 +238,10 @@ const Home = () => {
 						<section className="section ">
 							<div className="flex flex-col items-center justify-center">
 								<div className="flex justify-center items-center flex-col">
-									<p className="text-center">
+									<p className="text-center text-2xl text-primario-green-semi">
 										Siguenos en nuestra redes sociales
 									</p>
+
 									<div className="grid grid-cols-3 gap-10 mt-10 ">
 										<a
 											href="https://www.facebook.com/fcdicjauregui"

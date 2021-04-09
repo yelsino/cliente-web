@@ -5,7 +5,7 @@ const InputRdVerde = ({ atributos, handleChange, style }) => {
 		}
 	};
 	return (
-		<div className="relative my-4">
+		<div className="relative my-2">
 			<input
 				onChange={handleChange}
 				className={`  border-primario-green text-green-500 rounded-lg  font-semibold outline-none py-3 px-6 text-lg input_text fill-current appearance-none ${
