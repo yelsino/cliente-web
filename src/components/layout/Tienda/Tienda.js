@@ -28,34 +28,17 @@ const Tienda = () => {
 	}, []);
 	//d CONTEXTOS
 	const authContext = useContext(AuthContexto);
-	const {
-		usuario,
-		usuarioAutenticado,
-		actualizarCuentaDeUsuario,
-	} = authContext;
+	const { usuario, usuarioAutenticado, actualizarCuentaDeUsuario } =
+		authContext;
 	const alertasContext = useContext(alertaContext);
-	const {
-		alerta,
-		alerta2,
-		card,
-		abrirCard,
-		mostrarAlerta,
-		mostrarAlerta2,
-	} = alertasContext;
+	const { alerta, alerta2, card, abrirCard, mostrarAlerta, mostrarAlerta2 } =
+		alertasContext;
 	const elementosContext = useContext(ElementoContext);
-	const {
-		elemento_actual,
-		elemento,
-		mostrarElemento,
-		crearElemento,
-	} = elementosContext;
+	const { elemento_actual, elemento, mostrarElemento, crearElemento } =
+		elementosContext;
 	const productoContext = useContext(ProductoContext);
-	const {
-		productos,
-		bloqueo,
-		obtenerProductos,
-		obtenerporCategoria,
-	} = productoContext;
+	const { productos, bloqueo, obtenerProductos, obtenerporCategoria } =
+		productoContext;
 
 	const listaContext = useContext(ListaContext);
 	const {
@@ -169,7 +152,7 @@ const Tienda = () => {
 
 		let contador = 0;
 		for (const producto of verificar_productos) {
-			console.log(producto)
+			console.log(producto);
 			if (
 				producto.stock >=
 				verificar_cantidades.find((e) => e.id === producto._id)
@@ -464,9 +447,11 @@ const Tienda = () => {
 				// D CATALOGO
 				// D CATALOGO
 				<div className="mb-5">
-					<SubTitulo texto={"Nuestros productos"} style={"text-center"} />
+					{/* <SubTitulo texto={"Nuestros productos"} style={"text-center"} /> */}
 					<p className="text-center text-gray-500 mb-5">
-						Registrese para realizar un pedido
+						<span className="text-primario-red text-xl font-medium">- </span>
+						Registrese para realizar un pedido{" "}
+						<span className="text-primario-red text-xl font-medium"> -</span>
 					</p>
 					<Filtro
 						texto1={"Vegetales"}

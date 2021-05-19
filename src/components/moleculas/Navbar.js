@@ -22,8 +22,6 @@ const Navbar = (props) => {
 	const token_user = localStorage.getItem("token");
 	const elementosContext = useContext(ElementoContext);
 	const { elemento, crearElemento } = elementosContext;
-	
-
 
 	const openCardUser = (e) => {
 		e.preventDefault();
@@ -56,16 +54,17 @@ const Navbar = (props) => {
 					Hogar
 				</Link>
 
-
 				<div className=" px-5 py-1 relative  flex justify-center bg-white">
 					{token_user && (
 						<div onClick={openCardList} className="cursor-pointer relative">
-						{	!listasContext.listaseleccionada && <div className='absolute -top-2 -right-2'>
-								<span className="flex justify-center items-center ">
-									<span className="animate-ping absolute inline-flex h-3 w-3 bg-red-500 opacity-75 rounded-full"></span>
-									<span className="relative inline-flex rounded-full h-2 w-2 bg-primario-red"></span>
-								</span>
-							</div>}
+							{!listasContext.listaseleccionada && (
+								<div className="absolute -top-2 -right-2">
+									<span className="flex justify-center items-center ">
+										<span className="animate-ping absolute inline-flex h-3 w-3 bg-red-500 opacity-75 rounded-full"></span>
+										<span className="relative inline-flex rounded-full h-2 w-2 bg-primario-red"></span>
+									</span>
+								</div>
+							)}
 							<IconLista />
 						</div>
 					)}
@@ -116,6 +115,12 @@ const Navbar = (props) => {
 
 				{!token && (
 					<div className="relative px-5 py-1 flex justify-center">
+						<div className="absolute -top-0 -right-0">
+							<span className="flex justify-center items-center ">
+								<span className="animate-ping absolute inline-flex h-3 w-3 bg-red-500 opacity-75 rounded-full"></span>
+								<span className="relative inline-flex rounded-full h-2 w-2 bg-primario-red"></span>
+							</span>
+						</div>
 						<Link to={"/registro"}>Registrarse</Link>
 					</div>
 				)}
