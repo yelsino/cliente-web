@@ -54,7 +54,7 @@ function App() {
 												<Route path="/pedido" component={Pedido} />
 												{/* <Route path="/" component={Home} /> */}
 												{/* redirect to /tienda */}
-												<Redirect to="/tienda" />
+												{/* <Redirect to="/tienda" /> */}
 											</Switch>
 										</Router>
 									</AuthState>
