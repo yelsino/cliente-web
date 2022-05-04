@@ -27,7 +27,7 @@ const firebaseConfig = {
 	appId: "1:129750331895:web:f6117f2da566cbd740fef2"
   };
 
-  const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 // revisar si existe token
 const token = localStorage.getItem("token");
