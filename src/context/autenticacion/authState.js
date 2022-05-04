@@ -93,7 +93,7 @@ const AuthState = (props) => {
 				});
 			}
 
-			const alerta = error.response.data.message;
+			const alerta = error?.response?.data?.message;
 			dispatch({
 				type: LOGIN_ERROR,
 				payload: alerta,
@@ -136,7 +136,7 @@ const AuthState = (props) => {
 				localStorage.clear();
 				// window.location.replace(`${process.env.URL_PRODUCCION}`);
 				// window.location.replace("http://localhost:3000/");
-				window.location.replace("https://negocios-carlos.000webhostapp.com/");
+				window.location.replace("https://front-v1-ns.web.app/");
 				console.log("cuenta eliminada");
 			} else {
 				return;

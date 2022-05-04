@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/autenticacion/authContext";
 import DireccionContext from "../../../context/direcciones/direccionContext";

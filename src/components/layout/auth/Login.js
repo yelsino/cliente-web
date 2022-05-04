@@ -34,8 +34,8 @@ const Login = (props) => {
 	}, [mensaje, autenticado, props.history]);
 
 	const [usuario, guardarUsuario] = useState({
-		email: "",
-		password: "",
+		email: "yelsino@gmail.com",
+		password: "321321",
 	});
 
 	const { email, password } = usuario;
@@ -59,10 +59,10 @@ const Login = (props) => {
 	return (
 		<div className=" p-8  ">
 			<Navbar2
-				texto1={"Hogar"}
+				// texto1={"Hogar"}
 				texto2={"Tienda"}
 				texto3={""}
-				texto4={"Registro"}
+				// texto4={"Registro"}
 			/>
 
 			<div className="flex justify-center items-center h-screen lg:w-1/2 w-full relative z-20">

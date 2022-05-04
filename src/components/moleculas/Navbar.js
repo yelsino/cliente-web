@@ -47,12 +47,12 @@ const Navbar = (props) => {
 			</div>
 			<div></div>
 			<ul className=" self-center text-gray-700 flex text-xl bg-white">
-				<Link
+				{/* <Link
 					to={"/"}
 					className="px-5 py-1 focus-within:text-green-600 relative"
 				>
 					Hogar
-				</Link>
+				</Link> */}
 
 				<div className=" px-5 py-1 relative  flex justify-center bg-white">
 					{token_user && (
@@ -99,7 +99,7 @@ const Navbar = (props) => {
 					{token ? (
 						<IconUser open={openCardUser} />
 					) : (
-						<Link to={"/login"}>Iniciar</Link>
+						<Link to={"/login"}>Iniciar APP</Link>
 					)}
 					{opencarduser && (
 						<div className="absolute mt-12">
@@ -113,7 +113,7 @@ const Navbar = (props) => {
 					)}
 				</div>
 
-				{!token && (
+				{/* {!token && (
 					<div className="relative px-5 py-1 flex justify-center">
 						<div className="absolute -top-0 -right-0">
 							<span className="flex justify-center items-center ">
@@ -123,7 +123,7 @@ const Navbar = (props) => {
 						</div>
 						<Link to={"/registro"}>Registrarse</Link>
 					</div>
-				)}
+				)} */}
 			</ul>
 		</div>
 	);

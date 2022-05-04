@@ -24,6 +24,7 @@ const Home = () => {
 		// usuarioAutenticado();
 	}, []);
 	return (
+		<>
 		<ReactFullpage
 			scrollOverflow={true}
 			sectionsColor={["", "", ""]}
@@ -32,16 +33,14 @@ const Home = () => {
 			render={({ state, fullpageApi }) => {
 				return (
 					<div id="fullpage-wrapper  ">
-						<Navbar2
+						{/* <Navbar2
 							texto1={"Hogar"}
 							texto2={"Tienda"}
 							texto3={"Iniciar"}
 							texto4={"Registro"}
 						/>
 						<div className="section ">
-							{/*  */}
-							{/* section 1 */}
-							{/*  */}
+							
 							<section className="slide relative">
 								<div className="flex justify-center flex-col items-center relative z-20">
 									{" "}
@@ -55,7 +54,7 @@ const Home = () => {
 								</div>
 								<div className="flex justify-center my-5 flex-col items-center z-30 relative">
 									{" "}
-									{/* <ImgAddCard /> */}
+
 									<NavLink
 										activeStyle={{ color: "red" }}
 										to={"/tienda"}
@@ -89,14 +88,12 @@ const Home = () => {
 									<p className=" text-primario-blue font-semibold leading-10  ">
 										¿como comprar?
 									</p>
-									{/* <span className="text-2xl">
-											<AiFillCaretDown />
-										</span> */}
+									
+
 								</div>
 							</section>
-							{/*  */}
-							{/* section 2 */}
-							{/*  */}
+						
+
 							<section className="slide relative">
 								<ComoComprar />
 								<div className=" flex flex-col items-center justify-center  bottom-5 inset-x-0 z-30 absolute">
@@ -122,9 +119,8 @@ const Home = () => {
 							</section>
 						</div>
 						<div className="section relative  ">
-							{/*  */}
-							{/* section 1 */}
-							{/*  */}
+							
+
 							<section className="slide relative  ">
 								<svg
 									className="absolute top-0 z-0"
@@ -163,9 +159,8 @@ const Home = () => {
 									</span>
 								</div>
 							</section>
-							{/*  */}
-							{/* section 2 */}
-							{/* galeria */}
+							
+
 							<section className="slide relative ">
 								<Galeria />
 
@@ -286,11 +281,12 @@ const Home = () => {
 									Regresar
 								</button>
 							</div>
-						</section>
+						</section> */}
 					</div>
 				);
 			}}
 		/>
+		</>
 	);
 };
 

@@ -1,5 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/autenticacion/authContext";
 import DireccionContext from "../../../context/direcciones/direccionContext";
@@ -82,11 +82,13 @@ const Pedido = () => {
 		};
 		generarNuevoPedido(nuevo_pedido);
 	};
+	
 	useEffect(() => {
 		usuarioAutenticado();
 		obtenerDirecciones();
 		obtenerListas();
 	}, []);
+
 	return (
 		<div className="flex items-center flex-col justify-center  mb-10">
 			<h3 className="text-3xl   my-10 text-primario-blue">RESUMEN DE PEDIDO</h3>
@@ -217,7 +219,7 @@ const Pedido = () => {
 								// window.location.replace(`${process.env.URL_PRODUCCION}/tienda`);
 								// window.location.replace("http://localhost:3000/tienda");
 								window.location.replace(
-									"https://negocios-carlos.000webhostapp.com/tienda"
+									"https://front-v1-ns.web.app/tienda"
 								);
 							}}
 							className="text-primario-red text-center cursor-pointer"
@@ -260,7 +262,7 @@ const Pedido = () => {
 										borrarEstadosPedido();
 										// window.location.replace("http://localhost:3000/tienda");
 										window.location.replace(
-											"https://negocios-carlos.000webhostapp.com/tienda"
+											"https://front-v1-ns.web.app/tienda"
 										);
 										// window.location.replace(`${process.env.URL_PRODUCCION}/tienda`);
 									}}

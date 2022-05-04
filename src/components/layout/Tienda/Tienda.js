@@ -15,7 +15,8 @@ import DireccionContext from "../../../context/direcciones/direccionContext";
 import InputRdVerde from "../../atomos/inputs/InputRdVerde";
 import Modal from "../../plantillas/Modal";
 import Notificacion from "../../atomos/objetos/Notificacion";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import CardProduct from "../../moleculas/Cards/CardProducto";
 import ModalLibre from "../../plantillas/ModalLibre";
 
@@ -70,11 +71,11 @@ const Tienda = () => {
 	const token_user = localStorage.getItem("token");
 	// d FUNCIONES
 
-	const getVegetales = () => obtenerporCategoria("601ecaad34bf2f55c7fbfd82");
+	const getVegetales = () => obtenerporCategoria("6271e9a09e55b90d6cd409b9");
 
-	const getAbarrotes = () => obtenerporCategoria("601ecaad34bf2f55c7fbfd84");
+	const getAbarrotes = () => obtenerporCategoria("6271e9a09e55b90d6cd409bb");
 
-	const getFrutas = () => obtenerporCategoria("601ecaad34bf2f55c7fbfd83");
+	const getFrutas = () => obtenerporCategoria("6271e9a09e55b90d6cd409ba");
 
 	const buscadorForName = async (e) => {
 		e.persist();
@@ -302,7 +303,7 @@ const Tienda = () => {
 										}}
 										texto={"Pedir Envio"}
 										style={
-											"fixed bottom-12 right-12 shadow-xl z-0 bg-red-100 text-xl py-4"
+											"fixed bottom-12 right-12 shadow-xl z-0  text-xl py-4 transition duration-500 ease-in-out transform hover:shadow-2xl"
 										}
 									/>
 								</div>
@@ -467,7 +468,7 @@ const Tienda = () => {
 					/>
 					<div className="flex flex-wrap justify-center mt-5">
 						{productos.map((e) => (
-							<CardProduct producto={e} />
+							<CardProduct producto={e} key={e._id} />
 						))}
 					</div>
 				</div>
@@ -747,7 +748,7 @@ const Tienda = () => {
 										cy="12"
 										r="10"
 										stroke="currentColor"
-										stroke-width="4"
+										strokeWidth="4"
 									></circle>
 									<path
 										className="opacity-75"

@@ -5,7 +5,7 @@ module.exports = {
 		extend: {
 			colors: {
 				"primario-green": "#B7FFC2",
-				"primario-green-pure": "#025400",
+				"primario-green-pure": "#037D00",
 				"primario-green-semi": "#008700",
 				"primario-blue": "#0085FF",
 				"primario-blue-claro": "#DDF5FF",
