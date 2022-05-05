@@ -45,7 +45,7 @@ function App() {
 							<ListaState>
 								<ProductoState>
 									<AuthState>
-										<Router>
+										<Router basename="/">
 											<Switch>
 												<Route exact path="/login" component={Login} />
 												<Route exact path="/registro" component={NuevaCuenta} />
@@ -54,7 +54,7 @@ function App() {
 												<Route path="/pedido" component={Pedido} />
 												{/* <Route path="/" component={Home} /> */}
 												{/* redirect to /tienda */}
-												{/* <Redirect to="/tienda" /> */}
+												<Redirect to="/" />
 											</Switch>
 										</Router>
 									</AuthState>
