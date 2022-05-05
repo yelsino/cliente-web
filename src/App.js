@@ -45,7 +45,7 @@ function App() {
 							<ListaState>
 								<ProductoState>
 									<AuthState>
-										<Router basename="/">
+										<Router>
 											<Switch>
 												<Route exact path="/login" component={Login} />
 												<Route exact path="/registro" component={NuevaCuenta} />
