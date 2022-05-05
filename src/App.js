@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route,Redirect  } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import AuthState from "./context/autenticacion/authState";
 import AlertaState from "./context/alertas/alertaState";
 import ProductoState from "./context/productos/productoState";
@@ -19,12 +19,12 @@ import ReclamoState from "./context/reclamos/reclamosState";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyB6sLIdAcgZsRhFWBOTDIJB4Sh1NAsJwbo",
-	authDomain: "front-v1-ns.firebaseapp.com",
-	projectId: "front-v1-ns",
-	storageBucket: "front-v1-ns.appspot.com",
-	messagingSenderId: "129750331895",
-	appId: "1:129750331895:web:f6117f2da566cbd740fef2"
+	apiKey: "AIzaSyA-2y6FY9L6hFHxSAIq6tNvuhxcqNe5aGw",
+	authDomain: "tienda-nscarlos-v1.firebaseapp.com",
+	projectId: "tienda-nscarlos-v1",
+	storageBucket: "tienda-nscarlos-v1.appspot.com",
+	messagingSenderId: "604735862393",
+	appId: "1:604735862393:web:f38fe5189a805444b246a8"
   };
 
 initializeApp(firebaseConfig);
